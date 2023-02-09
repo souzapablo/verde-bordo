@@ -1,6 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using VerdeBordo.Application.Features.Suppliers.Query.GetSuppliers;
+using VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliers;
 using VerdeBordo.Core.Repositories;
 using VerdeBordo.Infrastructure;
 using VerdeBordo.Infrastructure.Persistence.Repositories;

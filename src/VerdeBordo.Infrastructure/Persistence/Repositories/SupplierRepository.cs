@@ -13,11 +13,18 @@ namespace VerdeBordo.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Supplier>> GetSuppliersAsync()
+        public async Task<List<Supplier>> GetAllAsync()
         {
             return await _dbContext.Suppliers.Where(s => s.IsActive)
                 .Include(s => s.Products)
                 .ToListAsync();
+        }
+
+        public async Task<Supplier?> GetByIdAsync(Guid id)
+        {
+            return await _dbContext.Suppliers
+                .Include(s => s.Products)
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
     }
 }

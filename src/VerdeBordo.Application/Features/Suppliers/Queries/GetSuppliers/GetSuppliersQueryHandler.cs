@@ -2,7 +2,7 @@
 using VerdeBordo.Application.ViewModels.Suppliers;
 using VerdeBordo.Core.Repositories;
 
-namespace VerdeBordo.Application.Features.Suppliers.Query.GetSuppliers
+namespace VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliers
 {
     public class GetSuppliersQueryHandler : IRequestHandler<GetSuppliersQuery, List<SupplierViewModel>>
     {
@@ -15,13 +15,9 @@ namespace VerdeBordo.Application.Features.Suppliers.Query.GetSuppliers
 
         public async Task<List<SupplierViewModel>> Handle(GetSuppliersQuery request, CancellationToken cancellationToken)
         {
-            var suppliers = await _supplierRepository.GetSuppliersAsync();
+            var suppliers = await _supplierRepository.GetAllAsync();
 
-            return suppliers.Select(s => new SupplierViewModel
-            {
-                Id = s.Id,
-                Name = s.Name
-            }).ToList();
+            return suppliers.Select(s => new SupplierViewModel(s.Id, s.Name)).ToList();
         }
     }
 }
