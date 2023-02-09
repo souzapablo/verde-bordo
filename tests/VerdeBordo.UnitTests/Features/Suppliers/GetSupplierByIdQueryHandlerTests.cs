@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using Moq;
-using VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById;
-using VerdeBordo.Core.Repositories;
-using Xunit;
+﻿using VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById;
 
 namespace VerdeBordo.UnitTests.Features.Suppliers
 {

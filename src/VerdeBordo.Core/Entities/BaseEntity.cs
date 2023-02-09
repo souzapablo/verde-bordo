@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VerdeBordo.Core.Entities
+﻿namespace VerdeBordo.Core.Entities
 {
     public abstract class BaseEntity
     {
         protected BaseEntity() { }
 
         public Guid Id { get; private set; }
-        public bool IsActive { get; private set; }
-        public DateTime CreatedAt { get; private set; } = DateTime.Now;
-        public DateTime LastUpdate { get; private set; } = DateTime.Now;
+        public bool IsActive { get; private set; } = true;
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+        public DateTime LastUpdate { get; private set; } = DateTime.UtcNow;
 
-        public void ToggleActiveStatus() => IsActive = !IsActive;
+        public void ToggleActiveStatus() 
+        {
+            IsActive = !IsActive;
+            Update();
+        }
+
+        private void Update() => LastUpdate = DateTime.Now;
     }
 }

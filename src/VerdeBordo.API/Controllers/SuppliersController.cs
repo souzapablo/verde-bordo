@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Suppliers.Commands.CreateSupplier;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliers;
+using VerdeBordo.Application.InputModels.Suppliers;
 
 namespace VerdeBordo.API.Controllers
 {
@@ -32,9 +34,13 @@ namespace VerdeBordo.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSupplier()
+        public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierInputModel input)
         {
-            return Ok();
+            var command = new CreateSupplierCommand(input.Name);
+
+            var id = await _mediator.Send(command);
+
+            return CreatedAtAction(nameof(GetSupplierById), new { SupplierId = id }, input);
         }
 
         [HttpPatch("{supplierId:guid}")]

@@ -20,7 +20,7 @@ namespace VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById
             if (supplier is null)
                 throw new Exception("Supplier not found");
 
-            return new SupplierDetailsViewModel(supplier.Id, supplier.Products);
+            return new SupplierDetailsViewModel(supplier.Id, supplier.Name, supplier.Products);
         }
     }
 }

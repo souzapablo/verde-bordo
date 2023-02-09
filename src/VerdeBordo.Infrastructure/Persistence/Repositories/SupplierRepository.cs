@@ -26,5 +26,12 @@ namespace VerdeBordo.Infrastructure.Persistence.Repositories
                 .Include(s => s.Products)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task CreateSupplierAsync(Supplier supplier)
+        {
+            await _dbContext.Suppliers.AddAsync(supplier);
+
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
