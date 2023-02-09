@@ -4,12 +4,7 @@ namespace VerdeBordo.UnitTests.Features.Suppliers.Queries
 {
     public class GetSupplierByIdQueryHandlerTests
     {
-        private readonly Mock<ISupplierRepository> _supplierRepositoryMock;
-
-        public GetSupplierByIdQueryHandlerTests()
-        {
-            _supplierRepositoryMock = new();
-        }
+        private readonly Mock<ISupplierRepository> _supplierRepositoryMock = new();
 
 
         [Fact(DisplayName = "GetSupplierByIdQuery should throw exception when user doesn't exist")]

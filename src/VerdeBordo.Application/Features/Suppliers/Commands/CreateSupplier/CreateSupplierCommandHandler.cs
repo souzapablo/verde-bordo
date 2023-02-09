@@ -17,7 +17,7 @@ namespace VerdeBordo.Application.Features.Suppliers.Commands.CreateSupplier
         {
             var supplier = new Supplier(request.Name);
 
-            await _supplierRepository.CreateSupplierAsync(supplier);
+            await _supplierRepository.CreateAsync(supplier);
 
             return supplier.Id;
         }

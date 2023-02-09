@@ -27,14 +27,14 @@ namespace VerdeBordo.Infrastructure.Persistence.Repositories
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task CreateSupplierAsync(Supplier supplier)
+        public async Task CreateAsync(Supplier supplier)
         {
             await _dbContext.Suppliers.AddAsync(supplier);
 
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateSupplier(Supplier supplier)
+        public async Task UpdateAsync(Supplier supplier)
         {
             _dbContext.Suppliers.Update(supplier);
 

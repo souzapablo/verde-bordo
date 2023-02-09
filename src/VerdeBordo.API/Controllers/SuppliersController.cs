@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Suppliers.Commands.CreateSupplier;
+using VerdeBordo.Application.Features.Suppliers.Commands.DeleteSupplier;
 using VerdeBordo.Application.Features.Suppliers.Commands.UpdateSupplier;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliers;
@@ -55,9 +56,13 @@ namespace VerdeBordo.API.Controllers
         }
 
         [HttpDelete("{supplierId:guid}")]
-        public async Task<IActionResult> DeleteSupplier(Guid supplierId)
+        public async Task<IActionResult> LogicalDeleteSupplier(Guid supplierId)
         {
-            return NoContent();
+            var command = new DeleteSupplierCommand(supplierId); 
+            
+            await _mediator.Send(command);
+
+            return Ok();
         }
 
         [HttpGet("{supplierId:guid}/products")]
