@@ -15,6 +15,6 @@
             Update();
         }
 
-        private void Update() => LastUpdate = DateTime.Now;
+        protected void Update() => LastUpdate = DateTime.Now;
     }
 }

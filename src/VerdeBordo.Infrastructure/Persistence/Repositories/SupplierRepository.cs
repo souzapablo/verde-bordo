@@ -33,5 +33,12 @@ namespace VerdeBordo.Infrastructure.Persistence.Repositories
 
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateSupplier(Supplier supplier)
+        {
+            _dbContext.Suppliers.Update(supplier);
+
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class FakeSupplierFactory
     {
-        public static Supplier FakeSupplier(bool isActive) =>
+        public static Supplier FakeSupplier(bool isActive = true) =>
             new Faker<Supplier>("pt_BR")
             .RuleFor(s => s.Id, s => Guid.NewGuid())
             .RuleFor(s => s.Name, s => s.Company.CompanyName())

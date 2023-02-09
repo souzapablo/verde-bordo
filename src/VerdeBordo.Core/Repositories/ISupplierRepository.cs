@@ -7,5 +7,6 @@ namespace VerdeBordo.Core.Repositories
         Task<List<Supplier>> GetAllAsync();
         Task<Supplier?> GetByIdAsync(Guid id);
         Task CreateSupplierAsync(Supplier supplier);
+        Task UpdateSupplier(Supplier supplier);
     }
 }

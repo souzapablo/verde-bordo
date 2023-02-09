@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Suppliers.Commands.CreateSupplier;
+using VerdeBordo.Application.Features.Suppliers.Commands.UpdateSupplier;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliers;
 using VerdeBordo.Application.InputModels.Suppliers;
@@ -44,9 +45,13 @@ namespace VerdeBordo.API.Controllers
         }
 
         [HttpPatch("{supplierId:guid}")]
-        public async Task<IActionResult> UpdateSupplier(Guid supplierId)
+        public async Task<IActionResult> UpdateSupplier(Guid supplierId, [FromBody] UpdateSupplierInputModel input)
         {
-            return Ok();
+            var command = new UpdateSupplierCommand(supplierId, input.Name);
+
+            await _mediator.Send(command);
+
+            return NoContent();
         }
 
         [HttpDelete("{supplierId:guid}")]
