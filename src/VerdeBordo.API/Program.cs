@@ -1,11 +1,21 @@
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using VerdeBordo.Application.Features.Suppliers.Query.GetSuppliers;
+using VerdeBordo.Core.Repositories;
+using VerdeBordo.Infrastructure;
+using VerdeBordo.Infrastructure.Persistence.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+var connectionString = builder.Configuration.GetConnectionString("VerdeBordoCs");
+builder.Services.AddDbContext<VerdeBordoDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(typeof(GetSuppliersQuery));
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 
 var app = builder.Build();
 

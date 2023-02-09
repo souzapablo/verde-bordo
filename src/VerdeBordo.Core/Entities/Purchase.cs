@@ -1,6 +1,6 @@
 ﻿namespace VerdeBordo.Core.Entities
 {
-    public class Purchase
+    public class Purchase : BaseEntity
     {
         public Purchase(Guid productId, decimal amountPurchased, decimal? shipment, DateTime purchaseDate)
         {
@@ -15,6 +15,6 @@
         public decimal AmountPurchased { get; private set; }
         public decimal? Shipment { get; private set; }
         public DateTime PurchaseDate { get; private set; }
-        public decimal TotalValue => AmountPurchased * Product.Price - Shipment.GetValueOrDefault();
+        public decimal GetTotalValue() => AmountPurchased * Product.Price - Shipment.GetValueOrDefault();
     }
 }

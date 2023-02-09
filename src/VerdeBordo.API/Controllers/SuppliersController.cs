@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Suppliers.Query.GetSuppliers;
 
 namespace VerdeBordo.API.Controllers
 {
@@ -6,10 +8,18 @@ namespace VerdeBordo.API.Controllers
     [Route("api/v1/suppliers")]
     public class SuppliersController : ControllerBase
     {
+        private readonly IMediator _mediator;
+
+        public SuppliersController(IMediator mediator)
+        {
+            _mediator = mediator;
+        } 
+
         [HttpGet]
         public async Task<IActionResult> GetSuppliers()
         {
-            return Ok();
+            var query = new GetSuppliersQuery();
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("{supplierId:guid}")]
