@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Products.Queries.GeSupplierProducts;
 using VerdeBordo.Application.Features.Suppliers.Commands.CreateSupplier;
 using VerdeBordo.Application.Features.Suppliers.Commands.DeleteSupplier;
 using VerdeBordo.Application.Features.Suppliers.Commands.UpdateSupplier;
@@ -66,9 +67,11 @@ namespace VerdeBordo.API.Controllers
         }
 
         [HttpGet("{supplierId:guid}/products")]
-        public async Task<IActionResult> GetSupplierProducts(Guid productId)
+        public async Task<IActionResult> GetSupplierProducts(Guid supplierId)
         {
-            return Ok();
+            var query = new GetSupplierProductsQuery(supplierId);
+
+            return Ok(await _mediator.Send(query));
         }
 
         [HttpGet("product/{productId:guid}")]

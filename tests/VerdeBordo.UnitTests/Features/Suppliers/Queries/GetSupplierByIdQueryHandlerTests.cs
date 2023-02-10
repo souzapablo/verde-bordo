@@ -7,7 +7,7 @@ namespace VerdeBordo.UnitTests.Features.Suppliers.Queries
         private readonly Mock<ISupplierRepository> _supplierRepositoryMock = new();
 
 
-        [Fact(DisplayName = "GetSupplierByIdQuery should throw exception when user doesn't exist")]
+        [Fact(DisplayName = "Given an invalid supplier should throw exception")]
         public async Task GivenAnInvalidIdWhenQueryIsExecutedShouldThrowException()
         {
             // Arrange

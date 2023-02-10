@@ -6,7 +6,7 @@ namespace VerdeBordo.UnitTests.Features.Suppliers.Commands
     {
         private readonly Mock<ISupplierRepository> _supplierRepositoryMock = new();
 
-        [Fact(DisplayName = "Given a valid user should delete user")]
+        [Fact(DisplayName = "Given a valid supplier should delete user")]
         public async Task GivanAValidUserWhenCommandIsExecutedIsActiveShouldBeFalse()
         {
             // Arrange
@@ -27,7 +27,7 @@ namespace VerdeBordo.UnitTests.Features.Suppliers.Commands
             _supplierRepositoryMock.Verify(x => x.UpdateAsync(supplier), Times.Once);
         }
 
-        [Fact(DisplayName = "Given an invalid user should throw exception")]
+        [Fact(DisplayName = "Given an invalid supplier should throw exception")]
         public async Task GivanAnInvalidUserWhenCommandIsExecutedShouldThrowException()
         {
             // Arrange
