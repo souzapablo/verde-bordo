@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Purchases.Queries.GetPurchases;
 
 namespace VerdeBordo.API.Controllers;
 
@@ -6,10 +8,19 @@ namespace VerdeBordo.API.Controllers;
 [Route("api/v1/purchases")]
 public class PurchasesController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public PurchasesController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetPurchases()
     {
-        return Ok();
+        var query = new GetPurchasesQuery();
+        
+        return Ok(await _mediator.Send(query));
     }
 
     [HttpGet("{purchaseId:guid}")]

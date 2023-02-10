@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(typeof(GetSuppliersQuery));
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IPurchaseRepository, PurchasesRepository>();
 
 var app = builder.Build();
 
