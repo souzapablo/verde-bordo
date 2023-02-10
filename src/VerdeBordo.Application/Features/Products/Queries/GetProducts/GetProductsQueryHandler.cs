@@ -2,22 +2,21 @@
 using VerdeBordo.Application.ViewModels.Products;
 using VerdeBordo.Core.Repositories;
 
-namespace VerdeBordo.Application.Features.Products.Queries.GetProducts
+namespace VerdeBordo.Application.Features.Products.Queries.GetProducts;
+
+public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<ProductWithSupplierIdViewModel>>
 {
-    public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<ProductWithSupplierIdViewModel>>
+    private readonly IProductRepository _productRepository;
+
+    public GetProductsQueryHandler(IProductRepository productRepository)
     {
-        private readonly IProductRepository _productRepository;
+        _productRepository = productRepository;
+    }
 
-        public GetProductsQueryHandler(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
+    public async Task<List<ProductWithSupplierIdViewModel>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    {
+        var products = await _productRepository.GetAllAsync();
 
-        public async Task<List<ProductWithSupplierIdViewModel>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
-        {
-            var products = await _productRepository.GetAllAsync();
-
-            return products.Select(x => new ProductWithSupplierIdViewModel(x.Supplier.Name, x.Id, x.Description, x.Price)).ToList();
-        }
+        return products.Select(x => new ProductWithSupplierIdViewModel(x.Supplier.Name, x.Id, x.Description, x.Price)).ToList();
     }
 }

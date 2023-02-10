@@ -1,4 +1,3 @@
-﻿namespace VerdeBordo.Application.InputModels.Suppliers
-{
-    public record UpdateSupplierInputModel(string Name);
-}
+﻿namespace VerdeBordo.Application.InputModels.Suppliers;
+
+public record UpdateSupplierInputModel(string Name);
