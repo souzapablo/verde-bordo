@@ -17,6 +17,7 @@ namespace VerdeBordo.Infrastructure.Persistence.Repositories
         {
             return await _dbContext.Products
                 .Where(x => x.IsActive)
+                .Include(x => x.Supplier)
                 .ToListAsync();
         }
 
