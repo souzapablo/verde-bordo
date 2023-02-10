@@ -14,4 +14,10 @@ public class Product : BaseEntity
     public Supplier Supplier { get; private set; }
     public string Description { get; private set; }
     public decimal Price { get; private set; }
+
+    public void UpdatePrice(decimal newPrice)
+    {
+        Price = newPrice;
+        Update();
+    }
 }

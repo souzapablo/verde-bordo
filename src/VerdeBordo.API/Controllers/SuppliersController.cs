@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Products.Commands.CreateProduct;
 using VerdeBordo.Application.Features.Products.Commands.DeleteProduct;
+using VerdeBordo.Application.Features.Products.Commands.UpdateProduct;
 using VerdeBordo.Application.Features.Products.Queries.GeSupplierProducts;
 using VerdeBordo.Application.Features.Products.Queries.GetProductById;
 using VerdeBordo.Application.Features.Products.Queries.GetProducts;
@@ -68,7 +69,7 @@ public class SuppliersController : ControllerBase
         
         await _mediator.Send(command);
 
-        return Ok();
+        return NoContent();
     }
 
     [HttpGet("products")]
@@ -105,11 +106,23 @@ public class SuppliersController : ControllerBase
         return Ok(await _mediator.Send(query));
     }
 
-    [HttpDelete("product/{productId:guid}")]
-    public async Task<IActionResult> DeleteProduct(Guid productId)
+    [HttpPatch("product/{productId:guid}")]
+    public async Task<IActionResult> UpdateProduct(Guid productId, UpdateProductInputModel input)
     {
-        var query = new DeleteProductCommand(productId);
+        var command = new UpdateProductCommand(productId, input.NewPrice);
 
-        return Ok(await _mediator.Send(query));
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpDelete("product/{productId:guid}")]
+    public async Task<IActionResult> LogicalDeleteProduct(Guid productId)
+    {
+        var command = new DeleteProductCommand(productId);
+
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 }
