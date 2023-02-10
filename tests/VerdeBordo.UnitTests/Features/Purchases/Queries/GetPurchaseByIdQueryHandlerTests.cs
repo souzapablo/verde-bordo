@@ -1,6 +1,5 @@
-﻿namespace VerdeBordo.UnitTests.Features.Purchases.Queries
+﻿namespace VerdeBordo.UnitTests.Features.Purchases.Queries;
+
+public class GetPurchaseByIdQueryHandlerTests
 {
-    public class GetPurchaseByIdQueryHandlerTests
-    {
-    }
 }
