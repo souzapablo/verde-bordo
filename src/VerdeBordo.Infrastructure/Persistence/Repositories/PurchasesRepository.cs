@@ -19,4 +19,11 @@ public class PurchasesRepository : IPurchaseRepository
             .Where(x => x.IsActive)
             .ToListAsync();
     }
+
+    public async Task<Purchase?> GetByIdAsync(Guid id)
+    {
+        return await _dbContext.Purchases
+            .Include(x => x.Product)
+            .SingleOrDefaultAsync(x => x.Id == id);
+    }
 }
