@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Products.Commands;
 using VerdeBordo.Application.Features.Products.Queries.GeSupplierProducts;
+using VerdeBordo.Application.Features.Products.Queries.GetProductById;
 using VerdeBordo.Application.Features.Products.Queries.GetProducts;
 using VerdeBordo.Application.Features.Suppliers.Commands.CreateSupplier;
 using VerdeBordo.Application.Features.Suppliers.Commands.DeleteSupplier;
@@ -98,7 +99,9 @@ namespace VerdeBordo.API.Controllers
         [HttpGet("product/{productId:guid}")]
         public async Task<IActionResult> GetProductById(Guid productId)
         {
-            return Ok();
+            var query = new GetProductByIdQuery(productId);
+
+            return Ok(await _mediator.Send(query));
         }
     }
 }

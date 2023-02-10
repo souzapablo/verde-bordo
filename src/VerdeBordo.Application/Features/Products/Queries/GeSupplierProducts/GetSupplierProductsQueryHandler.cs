@@ -22,7 +22,7 @@ namespace VerdeBordo.Application.Features.Products.Queries.GeSupplierProducts
             if (supplier is null)
                 throw new Exception();
 
-            var supplierProducts = await _productRepository.GetBySupplierAsync(supplier.Id);
+            var supplierProducts = await _productRepository.GetBySupplierIdAsync(supplier.Id);
 
             return supplierProducts.Select(x => new ProductViewModel(x.Id, x.Description, x.Price)).ToList();
         }

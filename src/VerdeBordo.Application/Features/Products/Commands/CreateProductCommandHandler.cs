@@ -24,7 +24,7 @@ namespace VerdeBordo.Application.Features.Products.Commands
 
             var product = new Product(supplier.Id, request.Description, request.Price);
 
-            await _productRepository.CreateProductAsync(product);
+            await _productRepository.CreateAsync(product);
 
             return product.Id;
         }

@@ -5,7 +5,8 @@ namespace VerdeBordo.Core.Repositories
     public interface IProductRepository
     {
         Task<List<Product>> GetAllAsync();
-        Task<List<Product>> GetBySupplierAsync(Guid supplierId);
-        Task CreateProductAsync(Product product);
+        Task<List<Product>> GetBySupplierIdAsync(Guid supplierId);
+        Task<Product?> GetByIdAsync(Guid id);
+        Task CreateAsync(Product product);
     }
 }
