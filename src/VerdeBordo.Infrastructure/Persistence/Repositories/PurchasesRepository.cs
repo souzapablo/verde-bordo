@@ -17,6 +17,7 @@ public class PurchasesRepository : IPurchaseRepository
     {
         return await _dbContext.Purchases
             .Where(x => x.IsActive)
+            .Include(x => x.Product)
             .ToListAsync();
     }
 
@@ -25,5 +26,12 @@ public class PurchasesRepository : IPurchaseRepository
         return await _dbContext.Purchases
             .Include(x => x.Product)
             .SingleOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task CreateAsync(Purchase purchase)
+    {
+        await _dbContext.Purchases.AddAsync(purchase);
+
+        await _dbContext.SaveChangesAsync();
     }
 }

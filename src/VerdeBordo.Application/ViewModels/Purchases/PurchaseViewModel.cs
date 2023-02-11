@@ -1,3 +1,3 @@
 ﻿namespace VerdeBordo.Application.ViewModels.Purchases;
 
-public record PurchaseViewModel(string ProductDescription, decimal TotalValue, DateTime PurchaseDate);
+public record PurchaseViewModel(Guid Id, string ProductDescription, decimal TotalValue, DateTime PurchaseDate);

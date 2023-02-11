@@ -17,6 +17,6 @@ public class GetPurchasesQueryHandler : IRequestHandler<GetPurchasesQuery, List<
     {
         var purchases = await _purchaseRepository.GetAllAsync();
 
-        return purchases.Select(x => new PurchaseViewModel(x.Product.Description, x.GetTotalValue(), x.PurchaseDate)).ToList();
+        return purchases.Select(x => new PurchaseViewModel(x.Id, x.Product.Description, x.GetTotalValue(), x.PurchaseDate)).ToList();
     }
 }

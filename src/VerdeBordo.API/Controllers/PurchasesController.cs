@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Purchases.Commands.CreatePurchase;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchaseById;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchases;
+using VerdeBordo.Application.InputModels.Purchases;
 
 namespace VerdeBordo.API.Controllers;
 
@@ -33,9 +35,13 @@ public class PurchasesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePurchase()
+    public async Task<IActionResult> CreatePurchase(CreatePurchaseInputModel input)
     {
-        return Ok();
+        var command = new CreatePurchaseCommand(input.ProductId, input.AmountPurchased, input.PurchaseDate, input.Shipment);
+        
+        var id = await _mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetPurchaseById), new { PurchaseId = id }, input);
     }
 
     [HttpPatch("{purchaseId:guid}")]
