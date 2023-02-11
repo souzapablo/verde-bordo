@@ -23,7 +23,7 @@ public class GetPurchaseByIdQueryHandler : IRequestHandler<GetPurchaseByIdQuery,
         return new PurchaseDetailsViewModel(
             purchase.Id, 
             purchase.Product.Description, 
-            purchase.AmountPurchased,
+            purchase.PurchasedAmount,
             purchase.GetTotalValue(), 
             purchase.Shipment, 
             purchase.PurchaseDate);

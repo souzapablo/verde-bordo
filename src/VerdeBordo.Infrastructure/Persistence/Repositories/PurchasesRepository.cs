@@ -34,4 +34,11 @@ public class PurchasesRepository : IPurchaseRepository
 
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task UpdateAsync(Purchase purchase)
+    {
+        _dbContext.Purchases.Update(purchase);
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

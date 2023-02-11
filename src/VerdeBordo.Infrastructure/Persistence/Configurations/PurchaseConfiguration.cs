@@ -14,10 +14,10 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
             .WithOne()
             .HasForeignKey<Purchase>(p => p.ProductId);
 
-        builder.Property(p => p.AmountPurchased)
-            .HasPrecision(3, 2);
+        builder.Property(p => p.PurchasedAmount)
+            .HasPrecision(14, 8);
 
         builder.Property(p => p.Shipment)
-            .HasPrecision(3, 2);
+            .HasPrecision(14, 8);
     }
 }

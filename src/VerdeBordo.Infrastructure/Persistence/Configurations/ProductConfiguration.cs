@@ -11,6 +11,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Price)
-            .HasPrecision(3,2);
+            .HasPrecision(14,8);
     }
 }
