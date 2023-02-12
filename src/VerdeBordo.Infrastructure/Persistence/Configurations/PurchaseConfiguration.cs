@@ -11,8 +11,8 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
         builder.HasKey(p => p.Id);
 
         builder.HasOne(p => p.Product)
-            .WithOne()
-            .HasForeignKey<Purchase>(p => p.ProductId);
+            .WithMany()
+            .HasForeignKey(p => p.ProductId);
 
         builder.Property(p => p.PurchasedAmount)
             .HasPrecision(14, 8);

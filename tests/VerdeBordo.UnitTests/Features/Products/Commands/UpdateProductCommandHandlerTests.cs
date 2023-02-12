@@ -1,7 +1,4 @@
-﻿using Moq;
-using VerdeBordo.Application.Features.Products.Commands.UpdateProduct;
-using VerdeBordo.Application.Features.Suppliers.Commands.UpdateSupplier;
-using VerdeBordo.Core.Entities;
+﻿using VerdeBordo.Application.Features.Products.Commands.UpdateProduct;
 
 namespace VerdeBordo.UnitTests.Features.Products.Commands;
 

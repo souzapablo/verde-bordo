@@ -5,6 +5,7 @@ using VerdeBordo.Application.Features.Purchases.Commands.DeletePurchase;
 using VerdeBordo.Application.Features.Purchases.Commands.UpdatePurchase;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchaseById;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchases;
+using VerdeBordo.Application.Features.Reports;
 using VerdeBordo.Application.InputModels.Purchases;
 
 namespace VerdeBordo.API.Controllers;
@@ -69,6 +70,10 @@ public class PurchasesController : ControllerBase
     [HttpPost("report")]
     public async Task<IActionResult> GenerateReport()
     {
-        return Ok();
+        var command = new GeneratePurchaseReportCommand();
+
+        var result = await _mediator.Send(command);
+
+        return File(result.Content, result.ReportFileType, result.ReportFileName);
     }
 }

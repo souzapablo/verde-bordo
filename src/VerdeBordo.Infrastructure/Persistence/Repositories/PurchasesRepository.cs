@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using VerdeBordo.Application.DTOs.Reports;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
 
@@ -7,10 +11,12 @@ namespace VerdeBordo.Infrastructure.Persistence.Repositories;
 public class PurchasesRepository : IPurchaseRepository
 {
     private readonly VerdeBordoDbContext _dbContext;
+    private readonly string _connectionString;
 
-    public PurchasesRepository(VerdeBordoDbContext dbContext)
+    public PurchasesRepository(VerdeBordoDbContext dbContext, IConfiguration configuration)
     {
         _dbContext = dbContext;
+        _connectionString = configuration.GetConnectionString("VerdeBordoCs")!;
     }
     
     public async Task<List<Purchase>> GetAllAsync()
@@ -40,5 +46,22 @@ public class PurchasesRepository : IPurchaseRepository
         _dbContext.Purchases.Update(purchase);
 
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<PurchaseReportDTO>> GetReportData()
+    {
+        using var sqlConnection = new SqlConnection(_connectionString);
+
+        sqlConnection.Open();
+
+        var script = @"SELECT purchase.PurchaseDate, product.Description, purchase.PurchasedAmount, product.Price, purchase.Shipment, supplier.Name 
+                        FROM Purchases purchase
+                        JOIN Products product
+                        ON purchase.ProductId  = product.Id
+                        JOIN Suppliers supplier
+                        ON product.SupplierId = supplier.Id
+                        ";
+
+        return await sqlConnection.QueryAsync<PurchaseReportDTO>(script);
     }
 }
