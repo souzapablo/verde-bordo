@@ -24,4 +24,11 @@ public class CustomerRepository : ICustomerRepository
         return await _dbContext.Customers
             .SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
     }
+
+    public async Task CreateAsync(Customer customer)
+    {
+        await _dbContext.Customers.AddAsync(customer);
+
+        await _dbContext.SaveChangesAsync();
+    }
 }
