@@ -2,7 +2,7 @@
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
 
-namespace VerdeBordo.Application.Features.Customers.Commands;
+namespace VerdeBordo.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Guid>
 {

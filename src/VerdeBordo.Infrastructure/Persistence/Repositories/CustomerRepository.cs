@@ -31,4 +31,11 @@ public class CustomerRepository : ICustomerRepository
 
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task UpdateAsync(Customer customer)
+    {
+        _dbContext.Customers.Update(customer);
+
+        await _dbContext.SaveChangesAsync();
+    }
 }

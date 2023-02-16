@@ -2,6 +2,8 @@
 
 public class Customer : BaseEntity
 {
+    public Customer() { }
+
     public Customer(string name, string contact)
     {
         Name = name;
@@ -10,4 +12,10 @@ public class Customer : BaseEntity
 
     public string Name { get; private set; }
     public string Contact { get; set; }
+
+    public void UpdateContact(string newContact)
+    {
+        Contact = newContact;
+        Update();
+    }
 }

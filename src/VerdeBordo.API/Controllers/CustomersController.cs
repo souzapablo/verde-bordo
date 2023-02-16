@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using VerdeBordo.Application.Features.Customers.Commands;
+using VerdeBordo.Application.Features.Customers.Commands.CreateCustomer;
+using VerdeBordo.Application.Features.Customers.Commands.UpdateCustomer;
 using VerdeBordo.Application.Features.Customers.Queries.GetById;
 using VerdeBordo.Application.Features.Customers.Queries.GetCustomers;
 using VerdeBordo.Application.InputModels.Customers;
@@ -35,7 +36,7 @@ public class CustomersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCustomer(CreateCustomerInputModel input)
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerInputModel input)
     {
         var command = new CreateCustomerCommand(input.Name, input.Contact);
 
@@ -44,4 +45,13 @@ public class CustomersController : ControllerBase
         return CreatedAtAction(nameof(GetCustomerById), new { Id = id }, input);
     }
 
+    [HttpPatch("{id:guid}")]
+    public async Task<IActionResult> UpdateCustomer(Guid id, [FromBody] UpdateCustomerInputModel input)
+    {
+        var command = new UpdateCustomerCommand(id, input.NewContact);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
 }

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace VerdeBordo.Application.Features.Customers.Commands;
+namespace VerdeBordo.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommand : IRequest<Guid>
 {
