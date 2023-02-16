@@ -1,46 +1,45 @@
 ﻿using VerdeBordo.Application.Features.Customers.Commands.DeleteCustomer;
 
-namespace VerdeBordo.UnitTests.Features.Customers.Commands
+namespace VerdeBordo.UnitTests.Features.Customers.Commands;
+
+public class DeleteCustomerCommandHandlerTests
 {
-    public class DeleteCustomerCommandHandlerTests
+    private readonly Mock<ICustomerRepository> _customerRepositoryMock = new();
+
+    [Fact(DisplayName = "Given an invalid customer should throw exception")]
+    public async Task GivenAnInvalidCustomerWhenCommandIsExecutedShouldThrowException()
     {
-        private readonly Mock<ICustomerRepository> _customerRepositoryMock = new();
+        // Assert
+        var command = new DeleteCustomerCommand(Guid.NewGuid());
+        var sut = GenerateCommandHandler();
 
-        [Fact(DisplayName = "Given an invalid customer should throw exception")]
-        public async Task GivenAnInvalidCustomerWhenCommandIsExecutedShouldThrowException()
-        {
-            // Assert
-            var command = new DeleteCustomerCommand(Guid.NewGuid());
-            var sut = GenerateCommandHandler();
+        // Act
+        Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
-            // Act
-            Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
-
-            // Assert
-            await task.Should().ThrowAsync<Exception>();
-        }
-
-        [Fact(DisplayName = "Givan a valid customer should should delete")]
-        public async Task GivenAValidCustomerWhenCommandIsExecutedShouldDelete()
-        {
-            // Assert
-            var customer = FakeCustomerFactory.FakeCustomer();
-            var initialDate = customer.LastUpdate;
-            var command = new DeleteCustomerCommand(customer.Id);
-            var sut = GenerateCommandHandler();
-
-            _customerRepositoryMock.Setup(x => x.GetByIdAsync(customer.Id))
-                .ReturnsAsync(customer);
-
-            // Act
-            await sut.Handle(command, new CancellationToken());
-
-            // Assert
-            customer.IsActive.Should().BeFalse();
-            customer.LastUpdate.Should().NotBeSameDateAs(initialDate);
-            _customerRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Customer>()), Times.Once);
-        }
-
-        private DeleteCustomerCommandHandler GenerateCommandHandler() => new(_customerRepositoryMock.Object);
+        // Assert
+        await task.Should().ThrowAsync<Exception>();
     }
+
+    [Fact(DisplayName = "Givan a valid customer should should delete")]
+    public async Task GivenAValidCustomerWhenCommandIsExecutedShouldDelete()
+    {
+        // Assert
+        var customer = FakeCustomerFactory.FakeCustomer();
+        var initialDate = customer.LastUpdate;
+        var command = new DeleteCustomerCommand(customer.Id);
+        var sut = GenerateCommandHandler();
+
+        _customerRepositoryMock.Setup(x => x.GetByIdAsync(customer.Id))
+            .ReturnsAsync(customer);
+
+        // Act
+        await sut.Handle(command, new CancellationToken());
+
+        // Assert
+        customer.IsActive.Should().BeFalse();
+        customer.LastUpdate.Should().NotBeSameDateAs(initialDate);
+        _customerRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Customer>()), Times.Once);
+    }
+
+    private DeleteCustomerCommandHandler GenerateCommandHandler() => new(_customerRepositoryMock.Object);
 }
