@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Customers.Commands.CreateCustomer;
+using VerdeBordo.Application.Features.Customers.Commands.DeleteCustomer;
 using VerdeBordo.Application.Features.Customers.Commands.UpdateCustomer;
 using VerdeBordo.Application.Features.Customers.Queries.GetById;
 using VerdeBordo.Application.Features.Customers.Queries.GetCustomers;
@@ -49,6 +50,16 @@ public class CustomersController : ControllerBase
     public async Task<IActionResult> UpdateCustomer(Guid id, [FromBody] UpdateCustomerInputModel input)
     {
         var command = new UpdateCustomerCommand(id, input.NewContact);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteCustomer(Guid id)
+    {
+        var command = new DeleteCustomerCommand(id);
 
         await _mediator.Send(command);
 
