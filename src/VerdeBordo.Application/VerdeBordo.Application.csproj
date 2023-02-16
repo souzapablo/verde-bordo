@@ -7,15 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Features\Purchases\NewFolder\**" />
-    <Compile Remove="InputModels\NewFolder\**" />
-    <EmbeddedResource Remove="Features\Purchases\NewFolder\**" />
-    <EmbeddedResource Remove="InputModels\NewFolder\**" />
-    <None Remove="Features\Purchases\NewFolder\**" />
-    <None Remove="InputModels\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.100.3" />
     <PackageReference Include="MediatR" Version="11.1.0" />
   </ItemGroup>
