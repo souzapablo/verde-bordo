@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Customers.Queries.GetById;
 using VerdeBordo.Application.Features.Customers.Queries.GetCustomers;
 
 namespace VerdeBordo.API.Controllers;
@@ -20,6 +21,15 @@ public class CustomersController : ControllerBase
     {
         var query = new GetCustomersQuery();
 
-        return base.Ok(await _mediator.Send(query));
+        return Ok(await _mediator.Send(query));
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetCustomerById(Guid id)
+    {
+        var query = new GetCustomerByIdQuery(id);
+
+        return Ok(await _mediator.Send(query));
+    }
+
 }

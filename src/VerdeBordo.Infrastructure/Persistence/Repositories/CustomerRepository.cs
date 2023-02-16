@@ -18,4 +18,10 @@ public class CustomerRepository : ICustomerRepository
         return await _dbContext.Customers.Where(x => x.IsActive)
             .ToListAsync();
     }
+
+    public async Task<Customer?> GetByIdAsync(Guid id)
+    {
+        return await _dbContext.Customers
+            .SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
+    }
 }
