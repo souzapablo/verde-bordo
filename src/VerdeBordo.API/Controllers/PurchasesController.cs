@@ -40,7 +40,7 @@ public class PurchasesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreatePurchase(CreatePurchaseInputModel input)
     {
-        var command = new CreatePurchaseCommand(input.ProductId, input.AmountPurchased, input.PurchaseDate, input.Shipment);
+        var command = new CreatePurchaseCommand(input.UserId, input.ProductId, input.AmountPurchased, input.PurchaseDate, input.Shipment);
         
         var id = await _mediator.Send(command);
 

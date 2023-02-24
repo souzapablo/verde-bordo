@@ -45,7 +45,7 @@ public class SuppliersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierInputModel input)
     {
-        var command = new CreateSupplierCommand(input.Name);
+        var command = new CreateSupplierCommand(input.UserId, input.Name);
 
         var id = await _mediator.Send(command);
 

@@ -4,14 +4,17 @@ public class Purchase : BaseEntity
 {
     public Purchase() { }
 
-    public Purchase(Guid productId, decimal amountPurchased, decimal? shipment, DateTime purchaseDate)
+    public Purchase(Guid userId, Guid productId, decimal amountPurchased, decimal? shipment, DateTime purchaseDate)
     {
+        UserId = userId;
         ProductId = productId;
         PurchasedAmount = amountPurchased;
         Shipment = shipment;
         PurchaseDate = purchaseDate;
     }
 
+    public Guid UserId { get; private set; }
+    public User User { get; private set; }
     public Guid ProductId { get; private set; }
     public Product Product { get; private set; }
     public decimal PurchasedAmount { get; private set; }

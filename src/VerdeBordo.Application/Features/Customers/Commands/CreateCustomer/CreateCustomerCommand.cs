@@ -4,12 +4,14 @@ namespace VerdeBordo.Application.Features.Customers.Commands.CreateCustomer;
 
 public class CreateCustomerCommand : IRequest<Guid>
 {
-    public CreateCustomerCommand(string name, string contact)
+    public CreateCustomerCommand(Guid userId, string name, string contact)
     {
+        UserId = userId;
         Name = name;
         Contact = contact;
     }
-
-    public string Name { get; set; }
-    public string Contact { get; set; }
+    
+    public Guid UserId { get; }
+    public string Name { get; }
+    public string Contact { get; }
 }

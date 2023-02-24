@@ -12,6 +12,7 @@ public class SupplierConfiguration : IEntityTypeConfiguration<Supplier>
 
         builder.HasMany(s => s.Products)
             .WithOne(s => s.Supplier)
-            .HasForeignKey(s => s.SupplierId);
+            .HasForeignKey(s => s.SupplierId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

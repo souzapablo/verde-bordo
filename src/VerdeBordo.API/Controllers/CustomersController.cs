@@ -39,7 +39,7 @@ public class CustomersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerInputModel input)
     {
-        var command = new CreateCustomerCommand(input.Name, input.Contact);
+        var command = new CreateCustomerCommand(input.UserId, input.Name, input.Contact);
 
         var id = await _mediator.Send(command);
 

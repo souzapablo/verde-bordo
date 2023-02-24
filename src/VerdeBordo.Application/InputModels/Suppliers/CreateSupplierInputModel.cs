@@ -1,3 +1,3 @@
 ﻿namespace VerdeBordo.Application.InputModels.Suppliers;
 
-public record CreateSupplierInputModel(string Name);
+public record CreateSupplierInputModel(Guid UserId, string Name);
