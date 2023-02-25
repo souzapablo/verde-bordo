@@ -19,14 +19,7 @@ public class UpdatePurchaseCommandHandler : IRequestHandler<UpdatePurchaseComman
         if (purchase is null)
             throw new Exception("Purchase not found");
 
-        if (request.NewAmountPurchased.HasValue)
-            purchase.UpdatePurchasedAmount(request.NewAmountPurchased.Value);
-
-        if (request.NewShipment.HasValue)
-            purchase.UpdateShipment(request.NewShipment.Value);
-
-        if (request.NewPurchaseDate.HasValue)
-            purchase.UpdatePurchaseDate(request.NewPurchaseDate.Value);
+        purchase.UpdatePurchase(request.NewPurchasedAmount, request.NewShipment, request.NewPurchaseDate);
 
         await _purchaseRepository.UpdateAsync(purchase);
 

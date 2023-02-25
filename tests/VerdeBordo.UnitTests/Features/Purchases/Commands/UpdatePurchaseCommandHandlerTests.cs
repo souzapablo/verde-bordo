@@ -20,7 +20,7 @@ public class UpdatePurchaseCommandHandlerTests
         await task.Should().ThrowAsync<Exception>().WithMessage("Purchase not found");
     }
 
-    [Fact(DisplayName = "Given only a new PurchasedAmount should update only PurchasedAmount")]
+    [Fact(DisplayName = "Given a valid UpdatePurchaseCommand should update Purchase")]
     public async Task GivenOnlyANewPurchasedAmountWhenCommandIsExecutedShouldUpdateOnlyPurchasedAmount()
     {
         // Arrange
@@ -29,7 +29,8 @@ public class UpdatePurchaseCommandHandlerTests
         var command = new UpdatePurchaseCommand(purchase.Id, 101_0, null, null);
         var sut = GenerateCommandHandler();
 
-        SetupGetById(purchase);
+        _purchaseRepositoryMock.Setup(x => x.GetByIdAsync(purchase.Id))
+            .ReturnsAsync(purchase);
 
         // Act
         await sut.Handle(command, new CancellationToken());
@@ -39,59 +40,8 @@ public class UpdatePurchaseCommandHandlerTests
         purchase.Shipment.Should().Be(purchase.Shipment);
         purchase.PurchaseDate.Should().Be(purchase.PurchaseDate);
         purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
-        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Purchase>()), Times.Once);
-    }
-
-    [Fact(DisplayName = "Given only a new Shipment should update only Shipment")]
-    public async Task GivenOnlyANewShipmentWhenCommandIsExecutedShouldUpdateOnlyShipment()
-    {
-        // Arrange
-        var purchase = FakePurchaseFactory.FakePurchase();
-        var initialDate = purchase.LastUpdate;
-        var command = new UpdatePurchaseCommand(purchase.Id, null, 101_0, null);
-        var sut = GenerateCommandHandler();
-
-        SetupGetById(purchase);
-
-        // Act
-        await sut.Handle(command, new CancellationToken());
-
-        // Assert
-        purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
-        purchase.Shipment.Should().Be(101_0);
-        purchase.PurchaseDate.Should().Be(purchase.PurchaseDate);
-        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
-        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Purchase>()), Times.Once);
-    }
-
-    [Fact(DisplayName = "Given only a new PurchaseDate should update only PurchaseDate")]
-    public async Task GivenOnlyANewPurchaseDatetWhenCommandIsExecutedShouldUpdateOnlyPurchaseDate()
-    {
-        // Arrange
-        var newPurchaseDate = new DateTime(2022, 1, 2);
-        var purchase = FakePurchaseFactory.FakePurchase();
-        var initialDate = purchase.LastUpdate;
-        var command = new UpdatePurchaseCommand(purchase.Id, null, null, newPurchaseDate);
-        var sut = GenerateCommandHandler();
-
-        SetupGetById(purchase);
-
-        // Act
-        await sut.Handle(command, new CancellationToken());
-
-        // Assert
-        purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
-        purchase.Shipment.Should().Be(purchase.Shipment);
-        purchase.PurchaseDate.Should().Be(newPurchaseDate);
-        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
-        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Purchase>()), Times.Once);
+        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(purchase), Times.Once);
     }
 
     private UpdatePurchaseCommandHandler GenerateCommandHandler() => new(_purchaseRepositoryMock.Object);
-
-    private void SetupGetById(Purchase purchase)
-    {
-        _purchaseRepositoryMock.Setup(x => x.GetByIdAsync(purchase.Id))
-            .ReturnsAsync(purchase);
-    }
 }

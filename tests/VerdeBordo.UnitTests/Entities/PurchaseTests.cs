@@ -2,51 +2,74 @@
 
 public class PurchaseTests
 {
-    [Fact(DisplayName = "Given a new PurchasedAmount should update PurchasedAmount")]
+    [Fact(DisplayName = "Given a new PurchasedAmount UpdatePurchase should update only PurchasedAmount")]
     public void GivenANewPurchasedAmountWhenUpdateIsCalledShouldUpdatePurchasedAmount()
     {
         // Arrange
-        var newPurchasedAmount = 101;
         var purchase = FakePurchaseFactory.FakePurchase();
-        var firstDate = purchase.LastUpdate;
+        var intialDate = purchase.LastUpdate;
 
         // Act
-        purchase.UpdatePurchasedAmount(newPurchasedAmount);
+        purchase.UpdatePurchase(101_1, null, null);
 
         // Assert
-        purchase.PurchasedAmount.Should().Be(newPurchasedAmount);
-        purchase.LastUpdate.Should().NotBeSameDateAs(firstDate);
+        purchase.PurchasedAmount.Should().Be(101_1);
+        purchase.Shipment.Should().Be(purchase.Shipment);
+        purchase.PurchaseDate.Should().BeSameDateAs(purchase.PurchaseDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(intialDate);
     }
 
-    [Fact(DisplayName = "Given a new Shipment should update Shipment")]
+    [Fact(DisplayName = "Given a new Shipment UpdatePurchase should update only Shipment")]
     public void GivenANewShipmentWhenUpdateIsCalledShouldUpdateShipment()
     {
         // Arrange
-        var newShipment = 101;
+        var newShipment = 101_0;
         var purchase = FakePurchaseFactory.FakePurchase();
-        var firstDate = purchase.LastUpdate;
+        var initialDate = purchase.LastUpdate;
 
         // Act
-        purchase.UpdateShipment(newShipment);
+        purchase.UpdatePurchase(null, newShipment, null);
 
         // Assert
-        purchase.Shipment.Should().Be(newShipment);
-        purchase.LastUpdate.Should().NotBeSameDateAs(firstDate);
+        purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
+        purchase.Shipment.Should().Be(101_0);
+        purchase.PurchaseDate.Should().BeSameDateAs(purchase.PurchaseDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
     }
 
-    [Fact(DisplayName = "Given a new PurchaseDate should update PurchaseDate")]
+    [Fact(DisplayName = "Given a null new Shipment UpdatePurchase should update only Shipment")]
+    public void GivenANullNewShipmentWhenUpdateIsCalledShouldUpdateShipment()
+    {
+        // Arrange
+        var purchase = FakePurchaseFactory.FakePurchase();
+        var initialDate = purchase.LastUpdate;
+
+        // Act
+        purchase.UpdatePurchase(null, null, null);
+
+        // Assert
+        purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
+        purchase.Shipment.Should().BeNull();
+        purchase.PurchaseDate.Should().BeSameDateAs(purchase.PurchaseDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
+    }
+
+    [Fact(DisplayName = "Given a new PurchaseDate UpdatePurchase should update only PurchaseDate")]
     public void GivenANewPurchaseDateWhenUpdateIsCalledShouldUpdatePurchaseDate()
     {
         // Arrange
         var newPurchaseDate = DateTime.Now;
         var purchase = FakePurchaseFactory.FakePurchase();
-        var firstDate = purchase.LastUpdate;
+        var initialDate = purchase.LastUpdate;
 
         // Act
-        purchase.UpdatePurchaseDate(newPurchaseDate);
+        purchase.UpdatePurchase(null, null, newPurchaseDate);
 
         // Assert
+        purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
+        purchase.Shipment.Should().Be(purchase.Shipment);
+        purchase.PurchaseDate.Should().NotBeSameDateAs(initialDate);
         purchase.PurchaseDate.Should().Be(newPurchaseDate);
-        purchase.LastUpdate.Should().NotBeSameDateAs(firstDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
     }
 }

@@ -23,21 +23,18 @@ public class Purchase : BaseEntity
 
     public decimal GetTotalValue() => PurchasedAmount * Product.Price + Shipment.GetValueOrDefault();
 
-    public void UpdatePurchasedAmount(decimal newPurchasedAmount)
+    public void UpdatePurchase(decimal? newPurchasedAmount, decimal? newShipment, DateTime? newPurchaseDate)
     {
-        PurchasedAmount = newPurchasedAmount;
+        if (newPurchasedAmount.HasValue)
+            PurchasedAmount = newPurchasedAmount.Value;
+
+        if ((newShipment is null && Shipment.HasValue) || newShipment.HasValue)
+            Shipment = newShipment;
+        
+        if (newPurchaseDate.HasValue)
+            PurchaseDate = newPurchaseDate.Value;
+
         Update();
     }
 
-    public void UpdateShipment(decimal newShipment)
-    {
-        Shipment = newShipment;
-        Update();
-    }
-
-    public void UpdatePurchaseDate(DateTime newPurchaseDate)
-    {
-        PurchaseDate = newPurchaseDate;
-        Update();
-    }
 }
