@@ -7,11 +7,13 @@ using VerdeBordo.Application.Features.Customers.Queries.GetCustomerById;
 using VerdeBordo.Application.Features.Customers.Queries.GetCustomersByUserId;
 using VerdeBordo.Application.Features.Customers.Queries.GetCustomers;
 using VerdeBordo.Application.InputModels.Customers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VerdeBordo.API.Controllers;
 
 [ApiController]
 [Route("api/v1/customers")]
+[Authorize]
 public class CustomersController : ControllerBase
 {
     private readonly IMediator _mediator;

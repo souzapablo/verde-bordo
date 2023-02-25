@@ -8,11 +8,13 @@ using VerdeBordo.Application.Features.Purchases.Queries.GetPurchasesByUserId;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchases;
 using VerdeBordo.Application.Features.Reports;
 using VerdeBordo.Application.InputModels.Purchases;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VerdeBordo.API.Controllers;
 
 [ApiController]
 [Route("api/v1/purchases")]
+[Authorize]
 public class PurchasesController : ControllerBase
 {
     private readonly IMediator _mediator;

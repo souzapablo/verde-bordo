@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Products.Commands.CreateProduct;
 using VerdeBordo.Application.Features.Products.Commands.DeleteProduct;
@@ -19,6 +20,7 @@ namespace VerdeBordo.API.Controllers;
 
 [ApiController]
 [Route("api/v1/suppliers")]
+[Authorize]
 public class SuppliersController : ControllerBase
 {
     private readonly IMediator _mediator;

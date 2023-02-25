@@ -25,7 +25,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginViewModel>
         if (user is null)
             throw new Exception("Invalid e-mail or password");
 
-        var token = _authService.GenerateJwtToken(user.Email, user.Role == 0 ? "Amdin" : "Bordadeira");
+        var token = _authService.GenerateJwtToken(user.Email, user.Role == 0 ? "Admin" : "Bordadeira");
 
         return new LoginViewModel(user.Email, token);
     }

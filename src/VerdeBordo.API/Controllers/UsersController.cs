@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Users.Commands.CreateUser;
 using VerdeBordo.Application.Features.Users.Commands.DeleteUser;
@@ -9,7 +10,9 @@ using VerdeBordo.Application.InputModels.Users;
 
 namespace VerdeBordo.API.Controllers;
 
+[ApiController]
 [Route("api/v1/users")]
+[Authorize]
 public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -35,6 +38,7 @@ public class UsersController : ControllerBase
         return Ok(await _mediator.Send(query));
     }
 
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserInputModel input)
     {
@@ -62,6 +66,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteUser(Guid id)
     {
         var command = new DeleteUserCommand(id);
