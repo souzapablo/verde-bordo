@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Users.Queries.GetUserById;
 using VerdeBordo.Application.Features.Users.Queries.GetUsers;
 
 namespace VerdeBordo.API.Controllers;
@@ -18,6 +19,14 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> GetUsers()
     {
         var query = new GetUsersQuery();
+
+        return Ok(await _mediator.Send(query));
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetUserById(Guid id)
+    {
+        var query = new GetUserByIdQuery(id);
 
         return Ok(await _mediator.Send(query));
     }
