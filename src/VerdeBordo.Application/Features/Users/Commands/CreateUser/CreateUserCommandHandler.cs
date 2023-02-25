@@ -18,10 +18,10 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Guid>
 
     public async Task<Guid> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
-        var passwordHash = _authService.ComputeSha256Hash(request.Password);
-        
         if (await _userRepository.IsEmailRegistered(request.Email))
             throw new Exception("E-mail already registered");
+
+        var passwordHash = _authService.ComputeSha256Hash(request.Password);
 
         var user = new User(
             request.FirstName, 
