@@ -20,6 +20,14 @@ public class SupplierRepository : ISupplierRepository
             .ToListAsync();
     }
 
+    public async Task<List<Supplier>> GetByUserIdAsync(Guid userId)
+    {
+        return await _dbContext.Suppliers
+            .Where(s => s.IsActive && s.UserId == userId)
+            .Include(s => s.Products)
+            .ToListAsync();
+    }
+
     public async Task<Supplier?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Suppliers

@@ -11,6 +11,7 @@ using VerdeBordo.Application.Features.Suppliers.Commands.DeleteSupplier;
 using VerdeBordo.Application.Features.Suppliers.Commands.UpdateSupplier;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSupplierById;
 using VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliers;
+using VerdeBordo.Application.Features.Suppliers.Queries.GetSuppliersByUserId;
 using VerdeBordo.Application.InputModels.Products;
 using VerdeBordo.Application.InputModels.Suppliers;
 
@@ -31,6 +32,14 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> GetSuppliers()
     {
         var query = new GetSuppliersQuery();
+        return Ok(await _mediator.Send(query));
+    }
+
+    [HttpGet("user/{userId:guid}")]
+    public async Task<IActionResult> GetSuppliersByUserId(Guid userId)
+    {
+        var query = new GetSuppliersByUserIdQuery(userId);
+
         return Ok(await _mediator.Send(query));
     }
 
