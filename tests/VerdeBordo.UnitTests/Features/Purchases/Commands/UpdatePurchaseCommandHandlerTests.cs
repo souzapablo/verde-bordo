@@ -17,7 +17,7 @@ public class UpdatePurchaseCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Purchase not found");
     }
 
     [Fact(DisplayName = "Given only a new PurchasedAmount should update only PurchasedAmount")]

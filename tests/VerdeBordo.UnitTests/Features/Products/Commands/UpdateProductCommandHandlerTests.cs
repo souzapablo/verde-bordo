@@ -38,7 +38,7 @@ public class UpdateProductCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Product not found");
     }
 
     private UpdateProductCommandHandler GenerateCommandHandler() => new(_productRepository.Object);

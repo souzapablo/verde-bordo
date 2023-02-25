@@ -17,7 +17,7 @@ public class DeleteCustomerCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Customer not found");
     }
 
     [Fact(DisplayName = "Givan a valid customer should should delete")]

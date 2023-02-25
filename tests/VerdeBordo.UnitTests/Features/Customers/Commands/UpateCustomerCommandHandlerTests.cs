@@ -17,7 +17,7 @@ public class UpateCustomerCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Customer not found");
     }
 
     [Fact(DisplayName = "Given a new contact should update customer contact")]

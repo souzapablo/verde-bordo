@@ -39,7 +39,7 @@ public class DeleteSupplierCommandHandlerTest
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Supplier not found");
     }
 
     private DeleteSupplierCommandHandler GenereateCommandHanlder() => new (_supplierRepositoryMock.Object);

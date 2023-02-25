@@ -7,7 +7,7 @@ public class CreateCustomerCommandHandlerTests
     private readonly Mock<ICustomerRepository> _customerRepositoryMock = new();
     private readonly Mock<IUserRepository> _userRepositoryMock = new();
 
-    [Fact(DisplayName = "Given an invalid user should trhow exception")]
+    [Fact(DisplayName = "Given an invalid user should throw exception")]
     public async Task GivenAnInvalidUserWhenCommandIsExecutedShouldThrowException()
     {
         // Arrange
@@ -18,7 +18,7 @@ public class CreateCustomerCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("User not found");
     }
 
     private CreateCustomerCommandHandler GenerateCommandHandler() => new CreateCustomerCommandHandler(_customerRepositoryMock.Object, _userRepositoryMock.Object);

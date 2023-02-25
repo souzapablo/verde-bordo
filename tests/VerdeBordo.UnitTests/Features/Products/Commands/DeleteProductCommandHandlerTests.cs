@@ -39,7 +39,7 @@ public class DeleteProductCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Product not found");
     }
 
     private DeleteProductCommandHandler GenereateCommandHanlder() => new(_productRepositoryMock.Object);

@@ -18,7 +18,7 @@ public class CreateProductCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Supplier not found");
     }
 
     private CreateProductCommandHandler GenerateCommandHandler() => new CreateProductCommandHandler(_productRepositoryMock.Object, _supplierRepositoryMock.Object);

@@ -17,7 +17,7 @@ public class DeletePurchaseCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Purchase not found");
     }
 
     private DeletePurchaseCommandHandler GenerateCommandHandler() => new(_purchaseRepositoryMock.Object);   

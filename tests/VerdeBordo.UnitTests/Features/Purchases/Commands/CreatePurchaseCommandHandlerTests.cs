@@ -38,7 +38,7 @@ public class CreatePurchaseCommandHandlerTests
         Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("User not found");
     }
 
     private CreatePurchaseCommandHandler GenerateCommandHandler() => new(_purchaseRepositoryMock.Object, _productRepositoryMock.Object, _userRepositoryMock.Object);

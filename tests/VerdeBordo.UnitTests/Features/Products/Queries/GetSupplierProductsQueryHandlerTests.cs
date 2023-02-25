@@ -19,7 +19,7 @@ public class GetSupplierProductsQueryHandlerTests
         Func<Task> task = async () => await sut.Handle(query, new CancellationToken());
 
         // Assert
-        await task.Should().ThrowAsync<Exception>();
+        await task.Should().ThrowAsync<Exception>().WithMessage("Supplier not found");
     }
 
     private GetSupplierProductsQueryHandler GenerateQueryHandler() => new GetSupplierProductsQueryHandler(_productRepositoryMock.Object, _supplierRepositoryMock.Object);

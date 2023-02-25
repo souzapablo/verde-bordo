@@ -20,7 +20,7 @@ public class GetSupplierProductsQueryHandler : IRequestHandler<GetSupplierProduc
         var supplier = await _supplierRepository.GetByIdAsync(request.SupplierId);
 
         if (supplier is null)
-            throw new Exception();
+            throw new Exception("Supplier not found");
 
         var supplierProducts = await _productRepository.GetBySupplierIdAsync(supplier.Id);
 
