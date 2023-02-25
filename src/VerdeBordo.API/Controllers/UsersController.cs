@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Users.Commands.CreateUser;
+using VerdeBordo.Application.Features.Users.Commands.DeleteUser;
 using VerdeBordo.Application.Features.Users.Commands.UpdateUser;
 using VerdeBordo.Application.Features.Users.Queries.GetUserById;
 using VerdeBordo.Application.Features.Users.Queries.GetUsers;
@@ -54,6 +55,16 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserInputModel input)
     {
         var command = new UpdateUserCommand(id, input.FirstName, input.LastName, input.Username);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteUser(Guid id)
+    {
+        var command = new DeleteUserCommand(id);
 
         await _mediator.Send(command);
 

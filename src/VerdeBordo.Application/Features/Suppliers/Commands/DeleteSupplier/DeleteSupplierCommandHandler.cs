@@ -19,7 +19,7 @@ public class DeleteSupplierCommandHandler : IRequestHandler<DeleteSupplierComman
         if (supplier is null)
             throw new Exception("Supplier not found");
 
-        supplier.ToggleActiveStatus();
+        supplier.Delete();
 
         await _supplierRepository.UpdateAsync(supplier);
 

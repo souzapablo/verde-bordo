@@ -12,7 +12,7 @@ public class BaseEntityTests
         var initialDate = supplier.LastUpdate;
 
         // Act
-        supplier.ToggleActiveStatus();
+        supplier.Delete();
 
         // Assert
         supplier.IsActive.Should().NotBe(isActive);

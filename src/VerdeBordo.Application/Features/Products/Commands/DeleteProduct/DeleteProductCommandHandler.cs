@@ -19,7 +19,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
         if (product is null)
             throw new Exception("Product not found");
 
-        product.ToggleActiveStatus();
+        product.Delete();
 
         await _productRepository.UpdateAsync(product);
 

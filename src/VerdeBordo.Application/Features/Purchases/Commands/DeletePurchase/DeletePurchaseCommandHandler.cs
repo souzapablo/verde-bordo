@@ -19,7 +19,7 @@ public class DeletePurchaseCommandHandler : IRequestHandler<DeletePurchaseComman
         if (purchase is null)
             throw new Exception("Purchase not found");
 
-        purchase.ToggleActiveStatus();
+        purchase.Delete();
 
         await _purchaseRepository.UpdateAsync(purchase);
 

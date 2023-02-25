@@ -19,7 +19,7 @@ public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerComman
         if (customer is null)
             throw new Exception("Customer not found");
 
-        customer.ToggleActiveStatus();
+        customer.Delete();
 
         await _customerRepository.UpdateAsync(customer);
 

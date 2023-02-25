@@ -9,7 +9,7 @@ public abstract class BaseEntity
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     public DateTime LastUpdate { get; private set; } = DateTime.UtcNow;
 
-    public void ToggleActiveStatus() 
+    public void Delete() 
     {
         IsActive = !IsActive;
         Update();
