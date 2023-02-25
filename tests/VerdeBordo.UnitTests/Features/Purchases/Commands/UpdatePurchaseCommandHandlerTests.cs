@@ -25,6 +25,7 @@ public class UpdatePurchaseCommandHandlerTests
     {
         // Arrange
         var purchase = FakePurchaseFactory.FakePurchase(); 
+        var initialDate = purchase.LastUpdate;
         var command = new UpdatePurchaseCommand(purchase.Id, 101_0, null, null);
         var sut = GenerateCommandHandler();
 
@@ -37,6 +38,8 @@ public class UpdatePurchaseCommandHandlerTests
         purchase.PurchasedAmount.Should().Be(101_0);
         purchase.Shipment.Should().Be(purchase.Shipment);
         purchase.PurchaseDate.Should().Be(purchase.PurchaseDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
+        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Purchase>()), Times.Once);
     }
 
     [Fact(DisplayName = "Given only a new Shipment should update only Shipment")]
@@ -44,6 +47,7 @@ public class UpdatePurchaseCommandHandlerTests
     {
         // Arrange
         var purchase = FakePurchaseFactory.FakePurchase();
+        var initialDate = purchase.LastUpdate;
         var command = new UpdatePurchaseCommand(purchase.Id, null, 101_0, null);
         var sut = GenerateCommandHandler();
 
@@ -56,6 +60,8 @@ public class UpdatePurchaseCommandHandlerTests
         purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
         purchase.Shipment.Should().Be(101_0);
         purchase.PurchaseDate.Should().Be(purchase.PurchaseDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
+        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Purchase>()), Times.Once);
     }
 
     [Fact(DisplayName = "Given only a new PurchaseDate should update only PurchaseDate")]
@@ -64,6 +70,7 @@ public class UpdatePurchaseCommandHandlerTests
         // Arrange
         var newPurchaseDate = new DateTime(2022, 1, 2);
         var purchase = FakePurchaseFactory.FakePurchase();
+        var initialDate = purchase.LastUpdate;
         var command = new UpdatePurchaseCommand(purchase.Id, null, null, newPurchaseDate);
         var sut = GenerateCommandHandler();
 
@@ -76,6 +83,8 @@ public class UpdatePurchaseCommandHandlerTests
         purchase.PurchasedAmount.Should().Be(purchase.PurchasedAmount);
         purchase.Shipment.Should().Be(purchase.Shipment);
         purchase.PurchaseDate.Should().Be(newPurchaseDate);
+        purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
+        _purchaseRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<Purchase>()), Times.Once);
     }
 
     private UpdatePurchaseCommandHandler GenerateCommandHandler() => new(_purchaseRepositoryMock.Object);

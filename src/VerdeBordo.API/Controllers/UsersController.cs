@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Users.Commands.CreateUser;
+using VerdeBordo.Application.Features.Users.Commands.UpdateUser;
 using VerdeBordo.Application.Features.Users.Queries.GetUserById;
 using VerdeBordo.Application.Features.Users.Queries.GetUsers;
 using VerdeBordo.Application.InputModels.Users;
@@ -34,7 +35,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateUser(CreateUserInputModel input)
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserInputModel input)
     {
         var command = new CreateUserCommand(
             input.FirstName, 
@@ -47,5 +48,15 @@ public class UsersController : ControllerBase
         var id = await _mediator.Send(command);
 
         return CreatedAtAction(nameof(GetUserById), new { Id = id }, input);
+    }
+
+    [HttpPatch("{id:guid}")]
+    public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserInputModel input)
+    {
+        var command = new UpdateUserCommand(id, input.FirstName, input.LastName, input.Username);
+
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 }

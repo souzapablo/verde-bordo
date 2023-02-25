@@ -4,6 +4,7 @@ namespace VerdeBordo.Core.Entities;
 
 public class User : BaseEntity
 {
+    public User() { }
     public User(string firstName, string lastName, string username, string email, string password, Role role)
     {
         FirstName = firstName;
@@ -27,4 +28,18 @@ public class User : BaseEntity
     public List<Customer> Customers { get; private set; }
     public List<Supplier> Suppliers { get; private set; }
     public List<Purchase> Purchases { get; private set; }
+
+    public void UpdateUser(string? newFirstName, string? newLastName, string? newUsername)
+    {
+        if (newFirstName is not null)
+            FirstName = newFirstName;
+
+        if (newLastName is not null)
+            LastName = newLastName;
+
+        if (newUsername is not null)
+            Username = newUsername;
+        
+        Update();
+    }
 }
