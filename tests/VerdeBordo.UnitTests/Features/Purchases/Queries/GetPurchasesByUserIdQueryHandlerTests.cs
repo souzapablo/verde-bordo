@@ -1,18 +1,17 @@
-using VerdeBordo.Application.Features.Customers.Queries.GetCustomersByUserId;
+using VerdeBordo.Application.Features.Purchases.Queries.GetPurchasesByUserId;
 
-namespace VerdeBordo.UnitTests.Features.Customers.Queries;
+namespace VerdeBordo.UnitTests.Features.Purchases.Queries;
 
-public class GetCustomersByUserIdQueryHandlerTests
+public class GetPurchasesByUserIdQueryHandlerTests
 {
+    private readonly Mock<IPurchaseRepository> _purchaseRepositoryMock = new();
     private readonly Mock<IUserRepository> _userRepositoryMock = new();
-    private readonly Mock<ICustomerRepository> _customerRepositoryMock = new();
-
 
     [Fact(DisplayName = "Given an invalid user should throw exception")]
     public async Task GivenAnInvalidUserWhenQueryIsExecutedShouldThrowException()
     {
         // Arrange
-        var query = new GetCustomersByUserIdQuery(Guid.NewGuid());
+        var query = new GetPurchasesByUserIdQuery(Guid.NewGuid());
         var sut = GenerateQueryHandler();
 
         // Act
@@ -22,5 +21,5 @@ public class GetCustomersByUserIdQueryHandlerTests
         await task.Should().ThrowAsync<Exception>().WithMessage("User not found");
     }
 
-    public GetCustomersByUserIdQueryHandler GenerateQueryHandler() => new(_userRepositoryMock.Object, _customerRepositoryMock.Object);
+    private GetPurchasesByUserIdQueryHandler GenerateQueryHandler() => new(_purchaseRepositoryMock.Object, _userRepositoryMock.Object);
 }

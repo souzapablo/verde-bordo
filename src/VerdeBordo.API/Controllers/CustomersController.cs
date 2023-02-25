@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Customers.Commands.CreateCustomer;
 using VerdeBordo.Application.Features.Customers.Commands.DeleteCustomer;
 using VerdeBordo.Application.Features.Customers.Commands.UpdateCustomer;
-using VerdeBordo.Application.Features.Customers.Queries.GetById;
-using VerdeBordo.Application.Features.Customers.Queries.GetByUserId;
+using VerdeBordo.Application.Features.Customers.Queries.GetCustomerById;
+using VerdeBordo.Application.Features.Customers.Queries.GetCustomersByUserId;
 using VerdeBordo.Application.Features.Customers.Queries.GetCustomers;
 using VerdeBordo.Application.InputModels.Customers;
 
@@ -37,7 +37,7 @@ public class CustomersController : ControllerBase
         return Ok(await _mediator.Send(query));
     }
 
-    [HttpGet("by-user/{userId:guid}")]
+    [HttpGet("user/{userId:guid}")]
     public async Task<IActionResult> GetCustomerByUserId(Guid userId)
     {
         var query = new GetCustomersByUserIdQuery(userId);

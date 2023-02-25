@@ -2,7 +2,7 @@ using MediatR;
 using VerdeBordo.Application.ViewModels.Customers;
 using VerdeBordo.Core.Repositories;
 
-namespace VerdeBordo.Application.Features.Customers.Queries.GetByUserId;
+namespace VerdeBordo.Application.Features.Customers.Queries.GetCustomersByUserId;
 
 public class GetCustomersByUserIdQueryHandler : IRequestHandler<GetCustomersByUserIdQuery, List<CustomerViewModel>>
 {

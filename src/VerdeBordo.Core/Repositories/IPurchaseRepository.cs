@@ -6,6 +6,7 @@ namespace VerdeBordo.Core.Repositories;
 public interface IPurchaseRepository
 {
     Task<List<Purchase>> GetAllAsync();
+    Task<List<Purchase>> GetByUserIdAsync(Guid userId);
     Task<Purchase?> GetByIdAsync(Guid id);
     Task CreateAsync(Purchase purchase);
     Task UpdateAsync(Purchase purchase);

@@ -1,4 +1,4 @@
-﻿using VerdeBordo.Application.Features.Customers.Queries.GetById;
+﻿using VerdeBordo.Application.Features.Customers.Queries.GetCustomerById;
 
 namespace VerdeBordo.UnitTests.Features.Customers.Queries;
 

@@ -27,6 +27,14 @@ public class PurchasesRepository : IPurchaseRepository
             .ToListAsync();
     }
 
+    public async Task<List<Purchase>> GetByUserIdAsync(Guid userId)
+    {
+        return await _dbContext.Purchases
+            .Where(x => x.IsActive && x.UserId == userId)
+            .Include(x => x.Product)
+            .ToListAsync();
+    }
+
     public async Task<Purchase?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Purchases

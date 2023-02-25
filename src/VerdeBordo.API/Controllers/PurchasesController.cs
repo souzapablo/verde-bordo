@@ -4,6 +4,7 @@ using VerdeBordo.Application.Features.Purchases.Commands.CreatePurchase;
 using VerdeBordo.Application.Features.Purchases.Commands.DeletePurchase;
 using VerdeBordo.Application.Features.Purchases.Commands.UpdatePurchase;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchaseById;
+using VerdeBordo.Application.Features.Purchases.Queries.GetPurchasesByUserId;
 using VerdeBordo.Application.Features.Purchases.Queries.GetPurchases;
 using VerdeBordo.Application.Features.Reports;
 using VerdeBordo.Application.InputModels.Purchases;
@@ -26,6 +27,14 @@ public class PurchasesController : ControllerBase
     {
         var query = new GetPurchasesQuery();
         
+        return Ok(await _mediator.Send(query));
+    }
+
+    [HttpGet("user/{userId:guid}")]
+    public async Task<IActionResult> GetPurcahsesByUserId(Guid userId)
+    {
+        var query = new GetPurchasesByUserIdQuery(userId);
+
         return Ok(await _mediator.Send(query));
     }
 
