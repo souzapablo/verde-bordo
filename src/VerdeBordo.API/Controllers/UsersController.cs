@@ -1,7 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Users.Commands.CreateUser;
 using VerdeBordo.Application.Features.Users.Queries.GetUserById;
 using VerdeBordo.Application.Features.Users.Queries.GetUsers;
+using VerdeBordo.Application.InputModels.Users;
 
 namespace VerdeBordo.API.Controllers;
 
@@ -29,5 +31,21 @@ public class UsersController : ControllerBase
         var query = new GetUserByIdQuery(id);
 
         return Ok(await _mediator.Send(query));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateUser(CreateUserInputModel input)
+    {
+        var command = new CreateUserCommand(
+            input.FirstName, 
+            input.LastName, 
+            input.Username, 
+            input.Email, 
+            input.Password, 
+            input.Role);
+        
+        var id = await _mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetUserById), new { Id = id }, input);
     }
 }
