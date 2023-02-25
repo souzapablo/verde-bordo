@@ -13,6 +13,12 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
 
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _dbContext.Users
+            .Where(x => x.IsActive).ToListAsync();
+    }
+
     public async Task<User?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Users
