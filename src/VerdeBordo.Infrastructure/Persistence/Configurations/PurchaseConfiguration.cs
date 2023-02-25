@@ -12,7 +12,8 @@ public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase>
 
         builder.HasOne(p => p.Product)
             .WithMany()
-            .HasForeignKey(p => p.ProductId);
+            .HasForeignKey(p => p.ProductId)            
+            .OnDelete(DeleteBehavior.Restrict);;
 
         builder.Property(p => p.PurchasedAmount)
             .HasPrecision(14, 8);
