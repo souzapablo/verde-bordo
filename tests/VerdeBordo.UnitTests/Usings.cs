@@ -4,5 +4,6 @@ global using Moq;
 global using VerdeBordo.Core.Enums;
 global using VerdeBordo.Core.Entities;
 global using VerdeBordo.Core.Repositories;
+global using VerdeBordo.Core.Services;
 global using VerdeBordo.UnitTests.Fakers;
 global using Xunit;

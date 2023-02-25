@@ -5,6 +5,7 @@ namespace VerdeBordo.UnitTests.Features.Users.Commands;
 public class CreateUserCommandHandlerTests
 {
     private readonly Mock<IUserRepository> _userRepositoryMock = new();
+    private readonly Mock<IAuthService> _authServiceMock = new();
 
     [Fact(DisplayName = "Given a registered e-mail should throw exception")]
     public async Task GivenARegisteredEmailWhenCommandIsExecutedShouldThrowException()
@@ -23,5 +24,5 @@ public class CreateUserCommandHandlerTests
         await task.Should().ThrowAsync<Exception>().WithMessage("E-mail already registered");
     }
 
-    private CreateUserCommandHandler GenerateCommandHandler() => new(_userRepositoryMock.Object);    
+    private CreateUserCommandHandler GenerateCommandHandler() => new(_userRepositoryMock.Object, _authServiceMock.Object);    
 }
