@@ -49,7 +49,7 @@ public class PurchasesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePurchase(CreatePurchaseInputModel input)
+    public async Task<IActionResult> CreatePurchase([FromBody] CreatePurchaseInputModel input)
     {
         var command = new CreatePurchaseCommand(input.UserId, input.ProductId, input.AmountPurchased, input.PurchaseDate, input.Shipment);
         
@@ -59,7 +59,7 @@ public class PurchasesController : ControllerBase
     }
 
     [HttpPatch("{purchaseId:guid}")]
-    public async Task<IActionResult> UpdatePurchase(Guid purchaseId, UpdatePurchaseInputModel input)
+    public async Task<IActionResult> UpdatePurchase(Guid purchaseId, [FromBody] UpdatePurchaseInputModel input)
     {
         var command = new UpdatePurchaseCommand(purchaseId, input.NewPurchasedAmount, input.NewShipment, input.NewPurchaseDate);
 

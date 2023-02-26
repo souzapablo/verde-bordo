@@ -16,7 +16,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<IActionResult> Login(LoginInputModel input)
+    public async Task<IActionResult> Login([FromBody] LoginInputModel input)
     {
         var command = new LoginCommand(input.Email, input.Password);
 

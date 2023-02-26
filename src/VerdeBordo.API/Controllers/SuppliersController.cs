@@ -38,7 +38,7 @@ public class SuppliersController : ControllerBase
     }
 
     [HttpGet("user/{userId:guid}")]
-    public async Task<IActionResult> GetSuppliersByUserId(Guid userId)
+    public async Task<IActionResult> GetSuppliersByUserId([FromBody] Guid userId)
     {
         var query = new GetSuppliersByUserIdQuery(userId);
 
@@ -100,7 +100,7 @@ public class SuppliersController : ControllerBase
     }
 
     [HttpPost("{supplierId:guid}/new-product")]
-    public async Task<IActionResult> CreateProduct(Guid supplierId, CreateProductInputModel input)
+    public async Task<IActionResult> CreateProduct(Guid supplierId, [FromBody] CreateProductInputModel input)
     {
         var command = new CreateProductCommand(supplierId, input.Description, input.Price);
 
@@ -118,7 +118,7 @@ public class SuppliersController : ControllerBase
     }
 
     [HttpPatch("product/{productId:guid}")]
-    public async Task<IActionResult> UpdateProduct(Guid productId, UpdateProductInputModel input)
+    public async Task<IActionResult> UpdateProduct(Guid productId, [FromBody] UpdateProductInputModel input)
     {
         var command = new UpdateProductCommand(productId, input.NewPrice);
 
