@@ -1,59 +1,33 @@
-﻿using Dapper;
+﻿using System.Linq.Expressions;
+using Dapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using VerdeBordo.Application.DTOs.Reports;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
+using VerdeBordo.Infrastructure.Persistence.Repositories.Shared;
 
 namespace VerdeBordo.Infrastructure.Persistence.Repositories;
 
-public class PurchasesRepository : IPurchaseRepository
+public class PurchasesRepository : BaseRepository<Purchase>, IPurchaseRepository
 {
-    private readonly VerdeBordoDbContext _dbContext;
     private readonly string _connectionString;
 
-    public PurchasesRepository(VerdeBordoDbContext dbContext, IConfiguration configuration)
+    public PurchasesRepository(VerdeBordoDbContext context, IConfiguration configuration) : base(context)
     {
-        _dbContext = dbContext;
         _connectionString = configuration.GetConnectionString("VerdeBordoCs")!;
     }
-    
-    public async Task<List<Purchase>> GetAllAsync()
+
+    public async Task<List<Purchase>> GetByUserIdAsync(Guid userId, params Expression<Func<Purchase, object?>>[]? includes)
     {
-        return await _dbContext.Purchases
-            .Where(x => x.IsActive)
-            .Include(x => x.Product)
-            .ToListAsync();
-    }
+        var query = Context.Set<Purchase>().AsQueryable();
 
-    public async Task<List<Purchase>> GetByUserIdAsync(Guid userId)
-    {
-        return await _dbContext.Purchases
-            .Where(x => x.IsActive && x.UserId == userId)
-            .Include(x => x.Product)
-            .ToListAsync();
-    }
-
-    public async Task<Purchase?> GetByIdAsync(Guid id)
-    {
-        return await _dbContext.Purchases
-            .Include(x => x.Product)
-            .SingleOrDefaultAsync(x => x.Id == id);
-    }
-
-    public async Task CreateAsync(Purchase purchase)
-    {
-        await _dbContext.Purchases.AddAsync(purchase);
-
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Purchase purchase)
-    {
-        _dbContext.Purchases.Update(purchase);
-
-        await _dbContext.SaveChangesAsync();
+        if (includes is not null)
+            query = includes.Aggregate(query, (current, include) => current.Include(include));
+       
+        return await query.Where(x => x.IsActive && x.UserId == userId)
+                .ToListAsync();
     }
 
     public async Task<IEnumerable<PurchaseReportDTO>> GetReportData()

@@ -22,7 +22,7 @@ public class GetPurchasesByUserIdQueryHandler : IRequestHandler<GetPurchasesByUs
         if (user is null)
             throw new Exception("User not found");
         
-        var pruchases = await _purchaseRepository.GetByUserIdAsync(user.Id);
+        var pruchases = await _purchaseRepository.GetByUserIdAsync(user.Id, x => x.Product);
 
         return pruchases.Select(x => new PurchaseViewModel(x.Id, x.Product.Description, x.GetTotalValue(), x.PurchaseDate)).ToList();
     }

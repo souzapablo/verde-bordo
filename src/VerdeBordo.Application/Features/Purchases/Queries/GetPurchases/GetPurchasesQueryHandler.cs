@@ -15,7 +15,7 @@ public class GetPurchasesQueryHandler : IRequestHandler<GetPurchasesQuery, List<
 
     public async Task<List<PurchaseViewModel>> Handle(GetPurchasesQuery request, CancellationToken cancellationToken)
     {
-        var purchases = await _purchaseRepository.GetAllAsync();
+        var purchases = await _purchaseRepository.GetAllAsync(x => x.Product);
 
         return purchases.Select(x => new PurchaseViewModel(x.Id, x.Product.Description, x.GetTotalValue(), x.PurchaseDate)).ToList();
     }

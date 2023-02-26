@@ -15,7 +15,7 @@ public class GetPurchaseByIdQueryHandler : IRequestHandler<GetPurchaseByIdQuery,
 
     public async Task<PurchaseDetailsViewModel> Handle(GetPurchaseByIdQuery request, CancellationToken cancellationToken)
     {
-        var purchase = await _purchaseRepository.GetByIdAsync(request.Id);
+        var purchase = await _purchaseRepository.GetByIdAsync(request.Id, x => x.Product);
 
         if (purchase is null)
             throw new Exception("Purchase not found");

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using VerdeBordo.Application.ViewModels.Products;
 using VerdeBordo.Application.ViewModels.Suppliers;
 using VerdeBordo.Core.Repositories;
 
@@ -15,11 +16,13 @@ public class GetSupplierByIdQueryHandler : IRequestHandler<GetSupplierByIdQuery,
 
     public async Task<SupplierDetailsViewModel> Handle(GetSupplierByIdQuery request, CancellationToken cancellationToken)
     {
-        var supplier = await _supplierRepository.GetByIdAsync(request.Id);
+        var supplier = await _supplierRepository.GetByIdAsync(request.Id, x => x.Products);
 
         if (supplier is null)
             throw new Exception("Supplier not found");
 
-        return new SupplierDetailsViewModel(supplier.Id, supplier.Name, supplier.Products);
+        var productsViewModels = supplier.Products.Select(x => new ProductViewModel(x.Id, x.Description, x.Price));
+
+        return new SupplierDetailsViewModel(supplier.Id, supplier.Name, productsViewModels.ToList());
     }
 }

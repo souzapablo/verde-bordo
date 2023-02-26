@@ -1,51 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
+using VerdeBordo.Infrastructure.Persistence.Repositories.Shared;
 
 namespace VerdeBordo.Infrastructure.Persistence.Repositories;
 
-public class SupplierRepository : ISupplierRepository
+public class SupplierRepository : BaseRepository<Supplier>, ISupplierRepository
 {
-    private readonly VerdeBordoDbContext _dbContext;
 
-    public SupplierRepository(VerdeBordoDbContext dbContext)
+    public SupplierRepository(VerdeBordoDbContext context) : base(context) { }
+
+    public async Task<List<Supplier>> GetByUserIdAsync(Guid userId, params Expression<Func<Supplier, object?>>[]? includes)
     {
-        _dbContext = dbContext;
+        var query = Context.Set<Supplier>().AsQueryable();
+
+        if (includes is not null)
+            query = includes.Aggregate(query, (current, include) => current.Include(include));
+       
+        return await query.Where(x => x.IsActive && x.UserId == userId)
+                .ToListAsync();
     }
 
-    public async Task<List<Supplier>> GetAllAsync()
-    {
-        return await _dbContext.Suppliers.Where(s => s.IsActive)
-            .Include(s => s.Products)
-            .ToListAsync();
-    }
-
-    public async Task<List<Supplier>> GetByUserIdAsync(Guid userId)
-    {
-        return await _dbContext.Suppliers
-            .Where(s => s.IsActive && s.UserId == userId)
-            .Include(s => s.Products)
-            .ToListAsync();
-    }
-
-    public async Task<Supplier?> GetByIdAsync(Guid id)
-    {
-        return await _dbContext.Suppliers
-            .Include(s => s.Products)
-            .SingleOrDefaultAsync(x => x.Id == id);
-    }
-
-    public async Task CreateAsync(Supplier supplier)
-    {
-        await _dbContext.Suppliers.AddAsync(supplier);
-
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Supplier supplier)
-    {
-        _dbContext.Suppliers.Update(supplier);
-
-        await _dbContext.SaveChangesAsync();
-    }
 }

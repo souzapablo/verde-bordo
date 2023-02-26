@@ -15,7 +15,7 @@ public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, P
 
     public async Task<ProductDetailsViewModel> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetByIdAsync(request.ProductId);
+        var product = await _productRepository.GetByIdAsync(request.ProductId, x => x.Supplier);
 
         if (product is null)
             throw new Exception("Product not found");

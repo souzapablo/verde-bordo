@@ -1,12 +1,10 @@
-﻿using VerdeBordo.Core.Entities;
+﻿using System.Linq.Expressions;
+using VerdeBordo.Core.Entities;
+using VerdeBordo.Core.Repositories.Shared;
 
 namespace VerdeBordo.Core.Repositories;
 
-public interface ISupplierRepository
+public interface ISupplierRepository : IBaseRepository<Supplier>
 {
-    Task<List<Supplier>> GetAllAsync();
-    Task<List<Supplier>> GetByUserIdAsync(Guid userId);
-    Task<Supplier?> GetByIdAsync(Guid id);
-    Task CreateAsync(Supplier supplier);
-    Task UpdateAsync(Supplier supplier);
+    Task<List<Supplier>> GetByUserIdAsync(Guid userId, params Expression<Func<Supplier, object?>>[]? includes);
 }

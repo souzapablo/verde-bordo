@@ -1,51 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
+using VerdeBordo.Core.Repositories.Shared;
+using VerdeBordo.Infrastructure.Persistence.Repositories.Shared;
 
 namespace VerdeBordo.Infrastructure.Persistence.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository : BaseRepository<Product>, IProductRepository
 {
-    private readonly VerdeBordoDbContext _dbContext;
+    public ProductRepository(VerdeBordoDbContext context) : base(context) { }
 
-    public ProductRepository(VerdeBordoDbContext dbContext)
+    public async Task<List<Product>> GetBySupplierIdAsync(Guid supplierId, params Expression<Func<Product, object?>>[]? includes)
     {
-        _dbContext = dbContext;
-    }
+        var query = Context.Set<Product>().AsQueryable();
 
-    public async Task<List<Product>> GetAllAsync()
-    {
-        return await _dbContext.Products
-            .Where(x => x.IsActive)
-            .Include(x => x.Supplier)
-            .ToListAsync();
-    }
-
-    public async Task<List<Product>> GetBySupplierIdAsync(Guid supplierId)
-    {
-        return await _dbContext.Products
-                .Where(x => x.IsActive && x.SupplierId == supplierId)
+        if (includes is not null)
+            query = includes.Aggregate(query, (current, include) => current.Include(include));
+       
+        return await query.Where(x => x.IsActive && x.SupplierId == supplierId)
                 .ToListAsync();
-    }
-
-    public async Task<Product?> GetByIdAsync(Guid id)
-    {
-        return await _dbContext.Products
-            .Include(x => x.Supplier)
-            .SingleOrDefaultAsync(x => x.Id == id);
-    }
-
-    public async Task CreateAsync(Product product)
-    {
-        await _dbContext.Products.AddAsync(product);
-
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Product product)
-    {
-        _dbContext.Products.Update(product);
-
-        await _dbContext.SaveChangesAsync();
     }
 }

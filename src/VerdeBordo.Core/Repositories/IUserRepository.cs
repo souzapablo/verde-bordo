@@ -1,13 +1,10 @@
 using VerdeBordo.Core.Entities;
+using VerdeBordo.Core.Repositories.Shared;
 
 namespace VerdeBordo.Core.Repositories;
 
-public interface IUserRepository
+public interface IUserRepository : IBaseRepository<User>
 {
-    Task<List<User>> GetAllAsync();
-    Task<User?> GetByIdAsync(Guid id);
     Task<User?> GetByEmailAndPasswordAsync(string email, string password);
-    Task CreateAsync(User user);
-    Task UpdateAsync(User user);
     Task<bool> IsEmailRegistered(string email);
 }

@@ -1,48 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
+using VerdeBordo.Infrastructure.Persistence.Repositories.Shared;
 
 namespace VerdeBordo.Infrastructure.Persistence.Repositories;
 
-public class CustomerRepository : ICustomerRepository
+public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
 {
-    private readonly VerdeBordoDbContext _dbContext;
-
-    public CustomerRepository(VerdeBordoDbContext dbContext)
+    public CustomerRepository(VerdeBordoDbContext context) : base(context) { }
+  
+    public async Task<List<Customer>> GetByUserIdAsync(Guid userId, params Expression<Func<Customer, object?>>[]? includes)
     {
-        _dbContext = dbContext;
-    }
+        var query = Context.Set<Customer>().AsQueryable();
 
-    public async Task<List<Customer>> GetAllAsync()
-    {
-        return await _dbContext.Customers.Where(x => x.IsActive)
+        if (includes is not null)
+            query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+        return await query.Where(x => x.IsActive && x.UserId == userId)
             .ToListAsync();
-    }
-    
-    public async Task<List<Customer>> GetByUserIdAsync(Guid userId)
-    {
-        return await _dbContext.Customers
-            .Where(x => x.IsActive && x.UserId == userId)
-            .ToListAsync();
-    }
-
-    public async Task<Customer?> GetByIdAsync(Guid id)
-    {
-        return await _dbContext.Customers
-            .SingleOrDefaultAsync(x => x.Id == id && x.IsActive);
-    }
-
-    public async Task CreateAsync(Customer customer)
-    {
-        await _dbContext.Customers.AddAsync(customer);
-
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(Customer customer)
-    {
-        _dbContext.Customers.Update(customer);
-
-        await _dbContext.SaveChangesAsync();
     }
 }
