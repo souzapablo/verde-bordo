@@ -128,7 +128,7 @@ public class SuppliersController : ControllerBase
     }
 
     [HttpDelete("product/{productId:guid}")]
-    public async Task<IActionResult> LogicalDeleteProduct(Guid productId)
+    public async Task<IActionResult> DeleteProduct(Guid productId)
     {
         var command = new DeleteProductCommand(productId);
 

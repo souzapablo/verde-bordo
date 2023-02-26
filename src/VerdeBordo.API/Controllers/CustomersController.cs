@@ -40,7 +40,7 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet("user/{userId:guid}")]
-    public async Task<IActionResult> GetCustomerByUserId(Guid userId)
+    public async Task<IActionResult> GetCustomersByUserId(Guid userId)
     {
         var query = new GetCustomersByUserIdQuery(userId);
 
