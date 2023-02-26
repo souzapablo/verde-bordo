@@ -10,5 +10,5 @@ public class GetSupplierProductsQuery : IRequest<List<ProductViewModel>>
         SupplierId = supplierId;
     }
 
-    public Guid SupplierId { get; set; }
+    public Guid SupplierId { get; }
 }

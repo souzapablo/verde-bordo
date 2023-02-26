@@ -10,6 +10,6 @@ public class UpdateSupplierCommand : IRequest<Unit>
         NewName = newName;
     }
 
-    public Guid Id { get; set; }
-    public string NewName { get; set; }
+    public Guid Id { get; }
+    public string NewName { get; }
 }

@@ -10,6 +10,6 @@ public class UpdateProductCommand : IRequest<Unit>
         NewPrice = newPrice;
     }
 
-    public Guid Id { get; set; }
-    public decimal NewPrice { get; set; }
+    public Guid Id { get; }
+    public decimal NewPrice { get; }
 }

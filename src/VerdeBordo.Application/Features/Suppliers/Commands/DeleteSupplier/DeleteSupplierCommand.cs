@@ -9,5 +9,5 @@ public class DeleteSupplierCommand : IRequest<Unit>
         Id = id;
     }
 
-    public Guid Id { get; set; }
+    public Guid Id { get; }
 }

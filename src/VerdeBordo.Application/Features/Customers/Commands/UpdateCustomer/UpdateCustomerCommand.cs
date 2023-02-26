@@ -10,6 +10,6 @@ public class UpdateCustomerCommand : IRequest<Unit>
         NewContact = newContact;
     }
 
-    public Guid Id { get; set; }
-    public string NewContact { get; set; }
+    public Guid Id { get; }
+    public string NewContact { get; }
 }

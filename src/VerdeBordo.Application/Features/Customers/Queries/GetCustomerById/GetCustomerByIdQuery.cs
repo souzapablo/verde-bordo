@@ -10,5 +10,5 @@ public class GetCustomerByIdQuery : IRequest<CustomerDetailsViewModel>
         Id = id;
     }
 
-    public Guid Id { get; set; }
+    public Guid Id { get; }
 }

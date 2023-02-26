@@ -11,7 +11,7 @@ public class CreateProductCommand : IRequest<Guid>
         Price = price;
     }
 
-    public Guid SupplierId { get; set; }
-    public string Description { get; set; }
-    public decimal Price { get; set; }
+    public Guid SupplierId { get; }
+    public string Description { get; }
+    public decimal Price { get; }
 }

@@ -10,5 +10,5 @@ public class GetPurchaseByIdQuery : IRequest<PurchaseDetailsViewModel>
         Id = id;
     }
 
-    public Guid Id { get; set; }
+    public Guid Id { get; }
 }

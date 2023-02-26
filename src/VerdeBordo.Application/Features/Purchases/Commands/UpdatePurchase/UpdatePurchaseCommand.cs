@@ -12,8 +12,8 @@ public class UpdatePurchaseCommand : IRequest<Unit>
         NewPurchaseDate = newPurchaseDate;
     }
 
-    public Guid PurchaseId { get; set; }
-    public decimal? NewPurchasedAmount { get; set; }
-    public decimal? NewShipment { get; set; }
-    public DateTime? NewPurchaseDate { get; set; }
+    public Guid PurchaseId { get; }
+    public decimal? NewPurchasedAmount { get; }
+    public decimal? NewShipment { get; }
+    public DateTime? NewPurchaseDate { get; }
 }
