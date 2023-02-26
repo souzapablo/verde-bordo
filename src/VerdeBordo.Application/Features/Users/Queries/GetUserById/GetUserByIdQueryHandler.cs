@@ -1,5 +1,6 @@
 using MediatR;
 using VerdeBordo.Application.ViewModels.Users;
+using VerdeBordo.Core.Extensions;
 using VerdeBordo.Core.Repositories;
 
 namespace VerdeBordo.Application.Features.Users.Queries.GetUserById;
@@ -20,6 +21,6 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, UserDet
         if (user is null)
             throw new Exception("User not found");
 
-        return new UserDetailsViewModel(user.Id, user.FirstName, user.LastName, user.Username, user.Email, user.Role == 0 ? "Admin" : "Bordadeira");
+        return new UserDetailsViewModel(user.Id, user.FirstName, user.LastName, user.Username, user.Email, user.Role.GetDescription());
     }
 }

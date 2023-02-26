@@ -1,5 +1,7 @@
 using MediatR;
 using VerdeBordo.Application.ViewModels.Login;
+using VerdeBordo.Core.Enums;
+using VerdeBordo.Core.Extensions;
 using VerdeBordo.Core.Repositories;
 using VerdeBordo.Core.Services;
 
@@ -25,7 +27,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginViewModel>
         if (user is null)
             throw new Exception("Invalid e-mail or password");
 
-        var token = _authService.GenerateJwtToken(user.Email, user.Role == 0 ? "Admin" : "Bordadeira");
+        var token = _authService.GenerateJwtToken(user.Email, user.Role.GetDescription());
 
         return new LoginViewModel(user.Email, token);
     }

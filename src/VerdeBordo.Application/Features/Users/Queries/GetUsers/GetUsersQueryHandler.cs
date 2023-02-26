@@ -1,5 +1,6 @@
 using MediatR;
 using VerdeBordo.Application.ViewModels.Users;
+using VerdeBordo.Core.Extensions;
 using VerdeBordo.Core.Repositories;
 
 namespace VerdeBordo.Application.Features.Users.Queries.GetUsers;
@@ -17,6 +18,6 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<UserView
     {
         var users = await _userRepository.GetAllAsync();
 
-        return users.Select(x => new UserViewModel(x.Id, x.Username, x.Role == 0 ? "Admin" : "Bordadeira")).ToList();
+        return users.Select(x => new UserViewModel(x.Id, x.Username, x.Role.GetDescription())).ToList();
     }
 }
