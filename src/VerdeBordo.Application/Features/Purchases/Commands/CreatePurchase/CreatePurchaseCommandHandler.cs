@@ -30,7 +30,7 @@ public class CreatePurchaseCommandHandler : IRequestHandler<CreatePurchaseComman
         if (product is null)
             throw new Exception("Product not found");
 
-        var purchase = new Purchase(user.Id, product.Id, request.AmountPurchased, request.Shipment, request.PurchaseDate);
+        var purchase = new Purchase(user.Id, product.Id, request.PurchasedAmount, request.Shipment, request.PurchaseDate);
 
         await _purchaseRepository.CreateAsync(purchase);
 

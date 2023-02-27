@@ -1,3 +1,3 @@
 ﻿namespace VerdeBordo.Application.InputModels.Purchases;
 
-public record CreatePurchaseInputModel(Guid UserId, Guid ProductId, decimal AmountPurchased, DateTime PurchaseDate, decimal? Shipment = null);
+public record CreatePurchaseInputModel(Guid UserId, Guid ProductId, decimal PurchasedAmount, DateTime PurchaseDate, decimal? Shipment = null);

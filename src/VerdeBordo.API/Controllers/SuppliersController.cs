@@ -38,7 +38,7 @@ public class SuppliersController : ControllerBase
     }
 
     [HttpGet("user/{userId:guid}")]
-    public async Task<IActionResult> GetSuppliersByUserId([FromBody] Guid userId)
+    public async Task<IActionResult> GetSuppliersByUserId(Guid userId)
     {
         var query = new GetSuppliersByUserIdQuery(userId);
 
@@ -66,7 +66,7 @@ public class SuppliersController : ControllerBase
     [HttpPatch("{supplierId:guid}")]
     public async Task<IActionResult> UpdateSupplier(Guid supplierId, [FromBody] UpdateSupplierInputModel input)
     {
-        var command = new UpdateSupplierCommand(supplierId, input.Name);
+        var command = new UpdateSupplierCommand(supplierId, input.NewName);
 
         await _mediator.Send(command);
 

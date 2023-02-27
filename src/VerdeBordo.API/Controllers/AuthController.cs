@@ -15,7 +15,7 @@ public class AuthController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPut]
+    [HttpPut("login")]
     public async Task<IActionResult> Login([FromBody] LoginInputModel input)
     {
         var command = new LoginCommand(input.Email, input.Password);
