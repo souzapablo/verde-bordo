@@ -2,7 +2,7 @@
 
 public class PurchaseTests
 {
-    [Fact(DisplayName = "Given a new PurchasedAmount UpdatePurchase should update only PurchasedAmount")]
+    [Fact(DisplayName = "Given only a new PurchasedAmount UpdatePurchase should update only PurchasedAmount")]
     public void GivenANewPurchasedAmountWhenUpdateIsCalledShouldUpdatePurchasedAmount()
     {
         // Arrange
@@ -19,7 +19,7 @@ public class PurchaseTests
         purchase.LastUpdate.Should().NotBeSameDateAs(intialDate);
     }
 
-    [Fact(DisplayName = "Given a new Shipment UpdatePurchase should update only Shipment")]
+    [Fact(DisplayName = "Given only a new Shipment UpdatePurchase should update only Shipment")]
     public void GivenANewShipmentWhenUpdateIsCalledShouldUpdateShipment()
     {
         // Arrange
@@ -37,7 +37,7 @@ public class PurchaseTests
         purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
     }
 
-    [Fact(DisplayName = "Given a null new Shipment UpdatePurchase should update only Shipment")]
+    [Fact(DisplayName = "Given only a null new Shipment UpdatePurchase should update only Shipment")]
     public void GivenANullNewShipmentWhenUpdateIsCalledShouldUpdateShipment()
     {
         // Arrange
@@ -54,7 +54,7 @@ public class PurchaseTests
         purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
     }
 
-    [Fact(DisplayName = "Given a new PurchaseDate UpdatePurchase should update only PurchaseDate")]
+    [Fact(DisplayName = "Given only a new PurchaseDate UpdatePurchase should update only PurchaseDate")]
     public void GivenANewPurchaseDateWhenUpdateIsCalledShouldUpdatePurchaseDate()
     {
         // Arrange
