@@ -6,7 +6,7 @@ public class PurchaseTests
     public void GivenANewPurchasedAmountWhenUpdateIsCalledShouldUpdatePurchasedAmount()
     {
         // Arrange
-        var purchase = FakePurchaseFactory.FakePurchase();
+        var purchase = GetFakePurchase();
         var intialDate = purchase.LastUpdate;
 
         // Act
@@ -24,7 +24,7 @@ public class PurchaseTests
     {
         // Arrange
         var newShipment = 101_0;
-        var purchase = FakePurchaseFactory.FakePurchase();
+        var purchase = GetFakePurchase();
         var initialDate = purchase.LastUpdate;
 
         // Act
@@ -41,7 +41,7 @@ public class PurchaseTests
     public void GivenANullNewShipmentWhenUpdateIsCalledShouldUpdateShipment()
     {
         // Arrange
-        var purchase = FakePurchaseFactory.FakePurchase();
+        var purchase = GetFakePurchase();
         var initialDate = purchase.LastUpdate;
 
         // Act
@@ -59,7 +59,7 @@ public class PurchaseTests
     {
         // Arrange
         var newPurchaseDate = DateTime.Now;
-        var purchase = FakePurchaseFactory.FakePurchase();
+        var purchase = GetFakePurchase();
         var initialDate = purchase.LastUpdate;
 
         // Act
@@ -72,4 +72,6 @@ public class PurchaseTests
         purchase.PurchaseDate.Should().Be(newPurchaseDate);
         purchase.LastUpdate.Should().NotBeSameDateAs(initialDate);
     }
+
+    private static Purchase GetFakePurchase(bool isActive = true) =>  FakePurchaseFactory.PurchaseFaker(isActive);
 }

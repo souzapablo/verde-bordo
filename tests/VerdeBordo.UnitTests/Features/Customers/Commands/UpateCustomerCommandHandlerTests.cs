@@ -24,7 +24,7 @@ public class UpateCustomerCommandHandlerTests
     public async Task GivenANewContactWhenCommandIsExecutedShouldUpdateCustomerContact()
     {
         // Arrange
-        var customer = FakeCustomerFactory.FakeCustomer();
+        var customer = FakeCustomerFactory.CustomerFaker();
         var inicialDate = customer.LastUpdate;
         var command = new UpdateCustomerCommand(customer.Id, "new contact");
         var sut = GenerateCommandHandler();

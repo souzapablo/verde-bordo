@@ -8,7 +8,7 @@ public class BaseEntityTests
     public void GivenAnyValidEntityWhenToggleActiveStatusIsCalledShouldChangeActiveStatusToOpposite(bool isActive)
     {
         // Arrange
-        var supplier = FakeSupplierFactory.FakeSupplier(isActive);
+        var supplier = FakeSupplierFactory.SupplierFaker(isActive);
         var initialDate = supplier.LastUpdate;
 
         // Act

@@ -11,7 +11,7 @@ public class UpdateSupplierCommandHandlerTest
     public async Task GivenAValidUserWhenCommandIsExecutedShouldUpdateName()
     {
         // Arrange
-        var supplier = FakeSupplierFactory.FakeSupplier();
+        var supplier = FakeSupplierFactory.SupplierFaker();
         var initialDate = supplier.LastUpdate;
         var command = new UpdateSupplierCommand(supplier.Id, "New name");
         var sut = GenerateCommandHandler();

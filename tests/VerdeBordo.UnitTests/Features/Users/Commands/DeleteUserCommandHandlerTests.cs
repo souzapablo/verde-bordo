@@ -24,7 +24,7 @@ public class DeleteUserCommandHandlerTests
     public async Task GivenAValidDeleteUserWhenCommandIsExecutedCommandShouldDeleteUser()
     {
         // Arrange
-        var user = FakeUserFactory.FakeUser();
+        var user = FakeUserFactory.UserFaker();
         var command = new DeleteUserCommand(user.Id);
         var initialDate = user.LastUpdate;
         var sut = GenerateCommandHandler();

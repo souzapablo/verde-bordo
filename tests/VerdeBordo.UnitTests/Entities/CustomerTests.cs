@@ -6,7 +6,7 @@ public class CustomerTests
     public void GivenAValidNewContactWhenUpdateCustomerIsExecutedShouldUpdateCustomer()
     {
         // Arrange
-        var sut = FakeCustomerFactory.FakeCustomer();
+        var sut = FakeCustomerFactory.CustomerFaker();
         var initialDate = sut.LastUpdate;
 
         // Act

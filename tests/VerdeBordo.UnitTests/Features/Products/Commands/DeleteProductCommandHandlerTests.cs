@@ -10,7 +10,7 @@ public class DeleteProductCommandHandlerTests
     public async Task GivanAValidUserWhenCommandIsExecutedIsActiveShouldBeFalse()
     {
         // Arrange
-        var product = FakeProductFactory.FakeProduct();
+        var product = FakeProductFactory.ProductFaker();
         var initialDate = product.LastUpdate;
         var command = new DeleteProductCommand(product.Id);
         var sut = GenereateCommandHanlder();

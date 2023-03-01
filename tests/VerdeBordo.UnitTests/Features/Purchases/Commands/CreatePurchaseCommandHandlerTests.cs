@@ -27,7 +27,7 @@ public class CreatePurchaseCommandHandlerTests
     public async Task GivenAnInvalidUserWhenCommandIsExecutedShouldThrowException()
     {
         // Arrange
-        var product = FakeProductFactory.FakeProduct();
+        var product = FakeProductFactory.ProductFaker();
         var command = new CreatePurchaseCommand(Guid.NewGuid(), Guid.NewGuid(), 2_0, DateTime.Now, null);
         var sut = GenerateCommandHandler();
 

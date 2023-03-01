@@ -10,7 +10,7 @@ public class UpdateProductCommandHandlerTests
     public async Task GivenAValidUserWhenCommandIsExecutedShouldUpdateName()
     {
         // Arrange
-        var product = FakeProductFactory.FakeProduct();
+        var product = FakeProductFactory.ProductFaker();
         var initialDate = product.LastUpdate;
         var command = new UpdateProductCommand(product.Id, 25_335678);
         var sut = GenerateCommandHandler();

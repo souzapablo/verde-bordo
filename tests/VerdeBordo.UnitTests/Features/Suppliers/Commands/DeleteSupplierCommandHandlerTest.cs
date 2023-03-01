@@ -10,7 +10,7 @@ public class DeleteSupplierCommandHandlerTest
     public async Task GivanAValidUserWhenCommandIsExecutedIsActiveShouldBeFalse()
     {
         // Arrange
-        var supplier = FakeSupplierFactory.FakeSupplier();
+        var supplier = FakeSupplierFactory.SupplierFaker();
         var initialDate = supplier.LastUpdate;
         var command = new DeleteSupplierCommand(supplier.Id);
         var sut = GenereateCommandHanlder();

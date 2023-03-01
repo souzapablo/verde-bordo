@@ -2,7 +2,7 @@
 
 public class FakeCustomerFactory
 {
-    public static Customer FakeCustomer(bool isActive = true) =>
+    public static Customer CustomerFaker(bool isActive = true) =>
     new Faker<Customer>("pt_BR")
     .RuleFor(s => s.Id, s => Guid.NewGuid())
     .RuleFor(s => s.Name, s => s.Person.FirstName)

@@ -24,7 +24,7 @@ public class UpdatePurchaseCommandHandlerTests
     public async Task GivenOnlyANewPurchasedAmountWhenCommandIsExecutedShouldUpdateOnlyPurchasedAmount()
     {
         // Arrange
-        var purchase = FakePurchaseFactory.FakePurchase(); 
+        var purchase = FakePurchaseFactory.PurchaseFaker(); 
         var initialDate = purchase.LastUpdate;
         var command = new UpdatePurchaseCommand(purchase.Id, 101_0, null, null);
         var sut = GenerateCommandHandler();

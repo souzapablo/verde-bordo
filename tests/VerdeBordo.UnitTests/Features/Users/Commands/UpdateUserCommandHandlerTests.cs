@@ -24,7 +24,7 @@ public class UpdateUserCommandHandlerTests
     public async Task GivenOnlyANewFirstNameWhenCommandIsExecutedShouldUpdateFirstName()
     {
         // Arrange
-        var user = FakeUserFactory.FakeUser();
+        var user = FakeUserFactory.UserFaker();
         var command = new UpdateUserCommand(user.Id, "Test", "McTesty", "test@test.com");
         var sut = GenerateCommandHandler();
 

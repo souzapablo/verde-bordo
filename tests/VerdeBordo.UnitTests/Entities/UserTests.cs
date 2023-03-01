@@ -6,7 +6,7 @@ public class UserTests
     public void GivenANewFirstNameWhenUpdateIsCalledShouldUpdateFirstName()
     {
         // Arrange
-        var sut = FakeUserFactory.FakeUser();
+        var sut = GetFakeUser();
         var initialDate = sut.LastUpdate;
         
         // Act
@@ -23,7 +23,7 @@ public class UserTests
     public void GivenANewLastNameWhenUpdateIsCalledShouldUpdateLastName()
     {
         // Arrange
-        var sut = FakeUserFactory.FakeUser();
+        var sut = GetFakeUser();
         var initialDate = sut.LastUpdate;
         
         // Act
@@ -40,7 +40,7 @@ public class UserTests
     public void GivenANewUsernameWhenUpdateIsCalledShouldUpdateUsername()
     {
         // Arrange
-        var sut = FakeUserFactory.FakeUser();
+        var sut = GetFakeUser();
         var initialDate = sut.LastUpdate;
         
         // Act
@@ -52,4 +52,6 @@ public class UserTests
         sut.Username.Should().Be("olga.ben");
         sut.LastUpdate.Should().NotBeSameDateAs(initialDate);
     }
+
+    private static User GetFakeUser(bool isActive = true) => FakeUserFactory.UserFaker(isActive);
 }

@@ -24,7 +24,7 @@ public class DeleteCustomerCommandHandlerTests
     public async Task GivenAValidCustomerWhenCommandIsExecutedShouldDelete()
     {
         // Assert
-        var customer = FakeCustomerFactory.FakeCustomer();
+        var customer = FakeCustomerFactory.CustomerFaker();
         var initialDate = customer.LastUpdate;
         var command = new DeleteCustomerCommand(customer.Id);
         var sut = GenerateCommandHandler();

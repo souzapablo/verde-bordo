@@ -6,7 +6,7 @@ public class ProductTests
     public void GivenAValidNewPriceUpdatePriceShouldUpateProduct()
     {
         // Arrange
-        var sut = FakeProductFactory.FakeProduct();
+        var sut = FakeProductFactory.ProductFaker();
         var initialDate = sut.LastUpdate;
 
         // Act

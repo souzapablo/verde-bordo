@@ -2,7 +2,7 @@
 
 public class FakeProductFactory
 {
-    public static Product FakeProduct(bool isActive = true) =>
+    public static Product ProductFaker(bool isActive = true) =>
         new Faker<Product>("pt_BR")
         .RuleFor(s => s.Id, s => Guid.NewGuid())
         .RuleFor(s => s.Description, s => s.Commerce.Product())

@@ -1,10 +1,8 @@
-using VerdeBordo.Core.Enums;
-
 namespace VerdeBordo.UnitTests.Fakers;
 
 public class FakeUserFactory
 {
-    public static User FakeUser(bool isActive = true, Role role = Role.Admin) => 
+    public static User UserFaker(bool isActive = true, Role role = Role.Embroiderer) => 
     new Faker<User>("pt_BR")
     .RuleFor(u => u.Id, u => Guid.NewGuid())
     .RuleFor(u => u.IsActive, u => isActive)

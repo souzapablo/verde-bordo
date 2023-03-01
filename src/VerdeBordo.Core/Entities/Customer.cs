@@ -9,12 +9,15 @@ public class Customer : BaseEntity
         UserId = userId;
         Name = name;
         Contact = contact;
+
+        Orders = new();
     }
 
     public Guid UserId { get; private set; }
     public User User { get; private set; }
     public string Name { get; private set; }
     public string Contact { get; set; }
+    public List<Order> Orders { get; private set; }
 
     public void UpdateContact(string newContact)
     {
