@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
 
 namespace VerdeBordo.API.Controllers;
@@ -21,6 +22,14 @@ public class OrdersController : ControllerBase
     public async Task<IActionResult> GetAllOrders()
     {
         var query = new GetOrdersQuery();
+
+        return Ok(await _mediator.Send(query));
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetOrderById(Guid id)
+    {
+        var query = new GetOrderByIdQuery(id);
 
         return Ok(await _mediator.Send(query));
     }

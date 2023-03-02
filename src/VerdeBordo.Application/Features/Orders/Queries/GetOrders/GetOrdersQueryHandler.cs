@@ -1,5 +1,6 @@
 using MediatR;
 using VerdeBordo.Application.ViewModels.Orders;
+using VerdeBordo.Core.Extensions;
 using VerdeBordo.Core.Repositories;
 
 namespace VerdeBordo.Application.Features.Orders.Queries.GetOrders;
@@ -17,6 +18,6 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, List<OrderV
     {
         var orders = await _orderRepository.GetAllAsync(x => x.Customer, x => x.Embroidery);
 
-        return orders.Select(x => new OrderViewModel(x.Id, x.Customer.Name, x.Embroidery.Description, x.DueDate, x.Status)).ToList();
+        return orders.Select(x => new OrderViewModel(x.Id, x.Customer.Name, x.Embroidery.Description, x.DueDate, x.Status.GetDescription())).ToList();
     }
 }
