@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VerdeBordo.Application.Features.Orders.Commands.CreateOrder;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
+using VerdeBordo.Application.InputModels.Orders;
 
 namespace VerdeBordo.API.Controllers;
 
@@ -32,5 +34,15 @@ public class OrdersController : ControllerBase
         var query = new GetOrderByIdQuery(id);
 
         return Ok(await _mediator.Send(query));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateOrder(CreateOrderInputModel input)
+    {
+        var command = new CreateOrderCommand(input.CustomerId, input.DueDate, input.PaymentMethod);
+
+        var id = await _mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetOrderById), new { Id = id }, input);
     }
 }

@@ -25,7 +25,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
             order.Id, 
             order.CustomerId,
             order.Customer.Name,
-            order.EmbroideryId,
+            order.Embroidery.Id,
             order.Embroidery.Description,
             order.Embroidery.Price,
             order.DueDate,

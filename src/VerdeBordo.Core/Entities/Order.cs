@@ -6,12 +6,10 @@ public class Order : BaseEntity
 {
     public Order() { }
     
-    public Order(Guid customerId, Guid embroideryId, DateTime dueDate, decimal? shipment, PaymentMethod paymentMethod)
+    public Order(Guid customerId, DateTime dueDate, PaymentMethod paymentMethod)
     {
         CustomerId = customerId;
-        EmbroideryId = embroideryId;
         DueDate = dueDate;
-        Shipment = shipment;
         PaymentMethod = paymentMethod;
         Status = OrderStatus.Created;
 
@@ -96,6 +94,13 @@ public class Order : BaseEntity
     public void SetDueDate(DateTime dueDate)
     {
         DueDate = dueDate;
+        Update();
+    }
+
+    public void AddEmbroidery(Embroidery embroidery)
+    {
+        EmbroideryId = embroidery.Id;
+        Embroidery = embroidery;
         Update();
     }    
 }
