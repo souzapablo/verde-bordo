@@ -1,6 +1,7 @@
 using MediatR;
 using VerdeBordo.Application.ViewModels.Embroideries;
 using VerdeBordo.Application.ViewModels.Orders;
+using VerdeBordo.Application.ViewModels.Payments;
 using VerdeBordo.Core.Extensions;
 using VerdeBordo.Core.Repositories;
 
@@ -24,6 +25,8 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
 
         var embroideriesViewModels = order.Embroideries.Select(x => new EmbroideryViewModel(x.Id, x.Description, x.Price)).ToList();
         
+        var paymentsViewModels = order.Payments.Select(x => new PaymentViewModel(x.Id, x.Amount, x.DueDate, x.PaymentDate)).ToList();
+
         return new OrderDetailsViewModel(
             order.Id, 
             order.CustomerId,
@@ -32,7 +35,7 @@ public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, Order
             order.DueDate,
             order.Shipment,
             order.PaymentMethod.GetDescription(),
-            order.Payments.Count,
+            paymentsViewModels,
             order.GetTotalValue(),
             order.Status.GetDescription());
     }

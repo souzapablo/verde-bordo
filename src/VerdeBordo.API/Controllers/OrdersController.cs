@@ -5,8 +5,10 @@ using VerdeBordo.Application.Features.Embroideries.Commands;
 using VerdeBordo.Application.Features.Orders.Commands.CreateOrder;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
+using VerdeBordo.Application.Features.Payments.Commands;
 using VerdeBordo.Application.InputModels.Embroideries;
 using VerdeBordo.Application.InputModels.Orders;
+using VerdeBordo.Application.InputModels.Payments;
 using VerdeBordo.Core.Enums;
 
 namespace VerdeBordo.API.Controllers;
@@ -59,6 +61,16 @@ public class OrdersController : ControllerBase
             input.Size, 
             input.Price, 
             input.HasFrame);
+
+        var orderId = await _mediator.Send(command);
+
+        return CreatedAtAction(nameof(GetOrderById), new { Id = orderId }, input);
+    }
+
+    [HttpPost("{id:guid}/payment")]
+    public async Task<IActionResult> CreatePayment(Guid id, [FromBody] CreatePaymentInputModel input)
+    {
+        var command = new CreatePaymentCommand(id, input.Amount, input.DueDate);
 
         var orderId = await _mediator.Send(command);
 

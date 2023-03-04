@@ -2,7 +2,7 @@ using VerdeBordo.Application.Features.Embroideries.Commands;
 
 namespace VerdeBordo.UnitTests.Features.Embroideries;
 
-public class CreateEmbroideryCommandHandlerTests
+public class CreatePaymentCommandHandlerTests
 {
     private readonly Mock<IEmbroideryRepository> _embroideryRepositoryMock = new();
     private readonly Mock<IOrderRepository> _orderRepositoryMock = new();
