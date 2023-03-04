@@ -18,8 +18,7 @@ public class Order : BaseEntity
 
     public Guid CustomerId { get; private set; }
     public Customer Customer { get; private set; }
-    public Guid EmbroideryId { get; private set; }
-    public Embroidery Embroidery { get; private set; }
+    public List<Embroidery> Embroideries { get; private set; }
 
     public DateTime DueDate { get; private set; }
     public decimal? Shipment { get; private set; }
@@ -27,7 +26,14 @@ public class Order : BaseEntity
     public List<Payment> Payments { get; private set; }
     public OrderStatus Status { get; private set;}
 
-    public decimal GetTotalValue() => Embroidery.Price + Shipment.GetValueOrDefault();
+    public decimal GetTotalValue()
+    {
+        decimal totalPrice = Shipment.GetValueOrDefault();
+
+        Embroideries.ForEach(x => totalPrice += x.Price);
+       
+        return totalPrice;
+    }
 
     public void StartDraft()
     {
@@ -96,11 +102,4 @@ public class Order : BaseEntity
         DueDate = dueDate;
         Update();
     }
-
-    public void AddEmbroidery(Embroidery embroidery)
-    {
-        EmbroideryId = embroidery.Id;
-        Embroidery = embroidery;
-        Update();
-    }    
 }

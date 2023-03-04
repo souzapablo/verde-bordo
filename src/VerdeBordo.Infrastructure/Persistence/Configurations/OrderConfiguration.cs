@@ -10,9 +10,9 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         builder.HasKey(o => o.Id);
 
-        builder.HasOne(o => o.Embroidery)
-            .WithOne(o => o.Order)
-            .HasForeignKey<Embroidery>(o => o.OrderId);
+        builder.HasMany(o => o.Embroideries)
+            .WithOne(e => e.Order)
+            .HasForeignKey(e => e.OrderId);
 
         builder.HasMany(o => o.Payments)
             .WithOne(p => p.Order)

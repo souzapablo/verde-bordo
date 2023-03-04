@@ -16,8 +16,14 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, List<OrderV
 
     public async Task<List<OrderViewModel>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
     {
-        var orders = await _orderRepository.GetAllAsync(x => x.Customer, x => x.Embroidery);
+        var orders = await _orderRepository.GetAllAsync(x => x.Customer, x => x.Embroideries);
 
-        return orders.Select(x => new OrderViewModel(x.Id, x.Customer.Name, x.Embroidery.Description, x.DueDate, x.Status.GetDescription())).ToList();
+
+        return orders.Select(x => new OrderViewModel(
+            x.Id, 
+            x.Customer.Name, 
+            x.Embroideries.Select(x => x.Description).ToList(), 
+            x.DueDate, 
+            x.Status.GetDescription())).ToList();
     }
 }

@@ -30,7 +30,7 @@ public class OrderTests
         action.Should().Throw<Exception>().WithMessage("Invalid status");
     }
 
-    [Fact(DisplayName = "Given a valid satus when CompleteDraft is called should change status to AwaitingDraftApproval")]
+    [Fact(DisplayName = "Given a valid status when CompleteDraft is called should change status to AwaitingDraftApproval")]
     public void GivenAValidStatusWhenCompleteDraftIsCalledShouldChangeStatusToAwaitingDraftApproval()
     {
         // Arrange
@@ -58,7 +58,7 @@ public class OrderTests
         action.Should().Throw<Exception>().WithMessage("Invalid status");
     }
 
-    [Fact(DisplayName = "Given a valid satus when ApproveDraft is called should change status to Embroidering")]
+    [Fact(DisplayName = "Given a valid status when ApproveDraft is called should change status to Embroidering")]
     public void GivenAValidStatusWhenApproveDraftIsCalledShouldChangeStatusToEmbroidering()
     {
         // Arrange
@@ -213,6 +213,23 @@ public class OrderTests
         // Assert
         sut.DueDate.Should().BeSameDateAs(newDueDate);
         sut.LastUpdate.Should().NotBeSameDateAs(initialDate);
+    }
+
+    [Fact(DisplayName = "Given two Embroideries with Shipment GetTotalValue should return value correctly")]
+    public void GivenTwoEmbroideriesWithShipmentGetTotalValueShouldReturnValueCorrectly()
+    {
+        // Arrange
+        var sut = GetFakeOrder();
+        var initialDate = sut.LastUpdate;
+        var firstEmbroidery = FakeEmbroideryFactory.EmbroideryFaker();
+        var secondEmbroidery = FakeEmbroideryFactory.EmbroideryFaker();
+        sut.Embroideries.AddRange(new List<Embroidery> { firstEmbroidery, secondEmbroidery });
+
+        // Act
+        var totalValue = sut.GetTotalValue();
+
+        // Assert
+        totalValue.Should().Be(sut.Shipment + firstEmbroidery.Price + secondEmbroidery.Price);
     }
 
     private static Order GetFakeOrder(bool isActive = true, OrderStatus status = OrderStatus.Created) => FakeOrderFactory.OrderFaker(isActive, status);

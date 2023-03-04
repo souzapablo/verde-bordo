@@ -8,7 +8,7 @@ public class FakeOrderFactory
         .RuleFor(o => o.LastUpdate, o => o.Date.Past())
         .RuleFor(o => o.IsActive, o => isActive)
         .RuleFor(o => o.Customer, o => FakeCustomerFactory.CustomerFaker())
-        .RuleFor(o => o.Embroidery, o => FakeEmbroideryFactory.EmbroideryFaker())
         .RuleFor(o => o.Shipment, o => o.Random.Decimal(1, 100))
+        .RuleFor(o => o.Embroideries, o => new())
         .RuleFor(o => o.Status, o => status);
 }
