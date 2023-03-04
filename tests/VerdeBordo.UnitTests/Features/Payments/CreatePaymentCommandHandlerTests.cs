@@ -1,4 +1,4 @@
-using VerdeBordo.Application.Features.Payments.Commands;
+using VerdeBordo.Application.Features.Payments.Commands.CreatePayment;
 
 namespace VerdeBordo.UnitTests.Features.Payments;
 

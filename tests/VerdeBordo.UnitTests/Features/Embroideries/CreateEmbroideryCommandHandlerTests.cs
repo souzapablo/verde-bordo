@@ -1,4 +1,4 @@
-using VerdeBordo.Application.Features.Embroideries.Commands;
+using VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
 
 namespace VerdeBordo.UnitTests.Features.Embroideries;
 

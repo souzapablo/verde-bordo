@@ -2,7 +2,7 @@ using MediatR;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
 
-namespace VerdeBordo.Application.Features.Embroideries.Commands;
+namespace VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
 
 public class CreateEmbroideryCommandHandler : IRequestHandler<CreateEmbroideryCommand, Guid>
 {

@@ -2,7 +2,7 @@ using MediatR;
 using VerdeBordo.Core.Entities;
 using VerdeBordo.Core.Repositories;
 
-namespace VerdeBordo.Application.Features.Payments.Commands;
+namespace VerdeBordo.Application.Features.Payments.Commands.CreatePayment;
 
 public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand, Guid>
 {

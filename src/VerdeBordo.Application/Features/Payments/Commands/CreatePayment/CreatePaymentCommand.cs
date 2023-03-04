@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace VerdeBordo.Application.Features.Payments.Commands;
+namespace VerdeBordo.Application.Features.Payments.Commands.CreatePayment;
 
 public class CreatePaymentCommand : IRequest<Guid>
 {

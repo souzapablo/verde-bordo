@@ -1,7 +1,7 @@
 using MediatR;
 using VerdeBordo.Core.Enums;
 
-namespace VerdeBordo.Application.Features.Embroideries.Commands;
+namespace VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
 
 public class CreateEmbroideryCommand : IRequest<Guid>
 {

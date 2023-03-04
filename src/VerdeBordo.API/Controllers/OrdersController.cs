@@ -1,15 +1,15 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VerdeBordo.Application.Features.Embroideries.Commands;
+using VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
 using VerdeBordo.Application.Features.Orders.Commands.CreateOrder;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
-using VerdeBordo.Application.Features.Payments.Commands;
+using VerdeBordo.Application.Features.Payments.Commands.CreatePayment;
+using VerdeBordo.Application.Features.Payments.UpdatePayment;
 using VerdeBordo.Application.InputModels.Embroideries;
 using VerdeBordo.Application.InputModels.Orders;
 using VerdeBordo.Application.InputModels.Payments;
-using VerdeBordo.Core.Enums;
 
 namespace VerdeBordo.API.Controllers;
 
@@ -75,5 +75,15 @@ public class OrdersController : ControllerBase
         var orderId = await _mediator.Send(command);
 
         return CreatedAtAction(nameof(GetOrderById), new { Id = orderId }, input);
+    }
+
+    [HttpPatch("payment/{id:guid}/pay")]
+    public async Task<IActionResult> CreatePayment(Guid id)
+    {
+        var command = new UpdatePaymentCommand(id);
+
+        var orderId = await _mediator.Send(command);
+
+        return NoContent();
     }
 }
