@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
 using VerdeBordo.Application.Features.Orders.Commands.CreateOrder;
+using VerdeBordo.Application.Features.Orders.Commands.StartDraft;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
 using VerdeBordo.Application.Features.Payments.Commands.CreatePayment;
@@ -83,6 +84,16 @@ public class OrdersController : ControllerBase
         var command = new UpdatePaymentCommand(id);
 
         var orderId = await _mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPatch("{id:guid}/start-draft")]
+    public async Task<IActionResult> StartDraft(Guid id)
+    {
+        var command = new StartDraftCommand(id);
+
+        await _mediator.Send(command);
 
         return NoContent();
     }

@@ -29,7 +29,7 @@ public class Order : BaseEntity
     public decimal GetTotalValue()
     {
         decimal totalPrice = Shipment.GetValueOrDefault();
-
+        
         Embroideries.ForEach(x => totalPrice += x.Price);
        
         return totalPrice;

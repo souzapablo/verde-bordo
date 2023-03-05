@@ -17,10 +17,13 @@ public class CreatePaymentCommandHandler : IRequestHandler<CreatePaymentCommand,
 
     public async Task<Guid> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
     {
-        var order = await _orderRepository.GetByIdAsync(request.OrderId);
+        var order = await _orderRepository.GetByIdAsync(request.OrderId, x => x.Embroideries);
 
         if (order is null)
             throw new Exception("Order not found");
+
+        if (!order.Embroideries.Any())
+            throw new Exception("Order has no embroidery");
 
         if (request.Amount > order.GetTotalValue())
             throw new Exception("Payment amount is higher than order total value");

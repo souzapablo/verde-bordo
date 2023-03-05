@@ -27,12 +27,12 @@ public class CreatePaymentCommandHandlerTests
     public async Task GivenAnInvalidAmountWhenCommandIsExecutedShouldThrowException(decimal extraAmount)
     {
         // Arrange
-        var order = FakeOrderFactory.OrderFaker();
+        var order = FakeOrderFactory.OrderWithEmbroideryFaker();
         var maxValue = order.GetTotalValue();
         var command = new CreatePaymentCommand(order.Id, maxValue + extraAmount, DateTime.Now);
         var sut = GenreateCommandHandler();
 
-        _orderRepositoryMock.Setup(x => x.GetByIdAsync(order.Id))
+        _orderRepositoryMock.Setup(x => x.GetByIdAsync(order.Id, x => x.Embroideries))
             .ReturnsAsync(order);
 
         // Act
@@ -40,6 +40,25 @@ public class CreatePaymentCommandHandlerTests
 
         // Assert
         await task.Should().ThrowAsync<Exception>().WithMessage("Payment amount is higher than order total value");
+
+    }
+
+    [Fact(DisplayName = "Given an order with no embroidery should throw exception")]
+    public async Task GivenAnOrderWithNoEmbroideryWhenCommandIsExecutedShouldThrowException()
+    {
+        // Arrange
+        var order = FakeOrderFactory.OrderFaker();
+        var command = new CreatePaymentCommand(order.Id, 150, DateTime.Now);
+        var sut = GenreateCommandHandler();
+
+        _orderRepositoryMock.Setup(x => x.GetByIdAsync(order.Id, x => x.Embroideries))
+            .ReturnsAsync(order);
+
+        // Act
+        Func<Task> task = async () => await sut.Handle(command, new CancellationToken());
+
+        // Assert
+        await task.Should().ThrowAsync<Exception>().WithMessage("Order has no embroidery");
 
     }
 
