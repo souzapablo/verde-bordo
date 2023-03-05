@@ -2,17 +2,20 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
+using VerdeBordo.Application.Features.Embroideries.Commands.DeleteEmbroidery;
 using VerdeBordo.Application.Features.Orders.Commands.ApproveDraft;
 using VerdeBordo.Application.Features.Orders.Commands.CompleteDraft;
 using VerdeBordo.Application.Features.Orders.Commands.CompleteEmbroidery;
 using VerdeBordo.Application.Features.Orders.Commands.CompleteFinishing;
 using VerdeBordo.Application.Features.Orders.Commands.CreateOrder;
+using VerdeBordo.Application.Features.Orders.Commands.DeleteOrder;
 using VerdeBordo.Application.Features.Orders.Commands.Deliver;
 using VerdeBordo.Application.Features.Orders.Commands.ReproveDraft;
 using VerdeBordo.Application.Features.Orders.Commands.StartDraft;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
 using VerdeBordo.Application.Features.Payments.Commands.CreatePayment;
+using VerdeBordo.Application.Features.Payments.Commands.DeletePayment;
 using VerdeBordo.Application.Features.Payments.UpdatePayment;
 using VerdeBordo.Application.InputModels.Embroideries;
 using VerdeBordo.Application.InputModels.Orders;
@@ -162,5 +165,35 @@ public class OrdersController : ControllerBase
         await _mediator.Send(command);
 
         return NoContent();
-    }          
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteOrder(Guid id)
+    {
+        var command = new DeleteOrderCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }   
+
+    [HttpDelete("embroidery/{id:guid}")]
+    public async Task<IActionResult> DeleteEmbroidery(Guid id)
+    {
+        var command = new DeleteEmbroideryCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }    
+
+    [HttpDelete("payment/{id:guid}")]
+    public async Task<IActionResult> DeletePayment(Guid id)
+    {
+        var command = new DeletePaymentCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }   
 }
