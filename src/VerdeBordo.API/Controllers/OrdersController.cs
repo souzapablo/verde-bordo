@@ -2,7 +2,13 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VerdeBordo.Application.Features.Embroideries.Commands.CreateEmbroideiry;
+using VerdeBordo.Application.Features.Orders.Commands.ApproveDraft;
+using VerdeBordo.Application.Features.Orders.Commands.CompleteDraft;
+using VerdeBordo.Application.Features.Orders.Commands.CompleteEmbroidery;
+using VerdeBordo.Application.Features.Orders.Commands.CompleteFinishing;
 using VerdeBordo.Application.Features.Orders.Commands.CreateOrder;
+using VerdeBordo.Application.Features.Orders.Commands.Deliver;
+using VerdeBordo.Application.Features.Orders.Commands.ReproveDraft;
 using VerdeBordo.Application.Features.Orders.Commands.StartDraft;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrderById;
 using VerdeBordo.Application.Features.Orders.Queries.GetOrders;
@@ -97,4 +103,64 @@ public class OrdersController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPatch("{id:guid}/complete-draft")]
+    public async Task<IActionResult> CompleteDraft(Guid id)
+    {
+        var command = new CompleteDraftCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }    
+
+    [HttpPatch("{id:guid}/approve-draft")]
+    public async Task<IActionResult> ApproveDraft(Guid id)
+    {
+        var command = new ApproveDraftCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }    
+
+    [HttpPatch("{id:guid}/reprove-draft")]
+    public async Task<IActionResult> ReproveDraft(Guid id)
+    {
+        var command = new ReproveDraftCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }   
+
+    [HttpPatch("{id:guid}/complete-embroidery")]
+    public async Task<IActionResult> CompleteEmbroidery(Guid id)
+    {
+        var command = new CompleteEmbroideryCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }      
+
+    [HttpPatch("{id:guid}/complete-finishing")]
+    public async Task<IActionResult> CompleteFinishing(Guid id)
+    {
+        var command = new CompleteFinishingCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    } 
+
+    [HttpPatch("{id:guid}/deliver")]
+    public async Task<IActionResult> Deliver(Guid id)
+    {
+        var command = new DeliverCommand(id);
+
+        await _mediator.Send(command);
+
+        return NoContent();
+    }          
 }
